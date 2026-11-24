@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Generator PDF Ucapan Terima Kasih - Yayasan Ahava Indonesia</title>
 
-  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <!-- Google Fonts: Playfair Display (Editorial Serif), Plus Jakarta Sans & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -26,15 +26,18 @@
         extend: {
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
-            serif: ['Georgia', 'Cambria', '"Times New Roman"', 'serif'],
+            display: ['"Playfair Display"', 'Georgia', 'serif'],
           },
           colors: {
             ahava: {
               navy: '#0B2863',
+              royal: '#154296',
               blue: '#1668E3',
               cyan: '#1CC6E8',
-              sky: '#85D5FF',
-              gold: '#F7B519',
+              gold: '#D99B16',
+              amber: '#F7B519',
+              ivory: '#FCFBF7',
+              sand: '#F5F0E6',
               pink: '#EA6B97',
               purple: '#6B1DC6',
             }
@@ -47,7 +50,7 @@
   <style>
     body {
       font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-      background-color: #f1f5f9;
+      background-color: #eef2f6;
       color: #0f172a;
       overflow-x: hidden;
     }
@@ -80,29 +83,31 @@
     .pdf-page {
       width: 794px;
       height: 1123px;
-      background-color: #ffffff;
+      background-color: #FCFBF7;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 20px 45px -15px rgba(11, 40, 99, 0.2), 0 6px 16px -4px rgba(15, 23, 42, 0.08);
+      box-shadow: 0 22px 48px -15px rgba(11, 40, 99, 0.18), 0 6px 16px -4px rgba(15, 23, 42, 0.08);
       flex-shrink: 0;
       user-select: none;
       -webkit-font-smoothing: antialiased;
       box-sizing: border-box;
     }
 
-    /* Diagonal subtle background band */
-    .pdf-diagonal-bg {
-      background: linear-gradient(150deg, #ffffff 0%, #ffffff 37%, #f6f8fb 37.2%, #f6f8fb 69%, #ffffff 69.2%, #ffffff 100%);
+    /* Editorial Warm Paper Gradient */
+    .editorial-paper {
+      background: radial-gradient(circle at 88% 8%, rgba(247, 181, 25, 0.09) 0%, transparent 42%),
+                  radial-gradient(circle at 12% 92%, rgba(28, 198, 232, 0.08) 0%, transparent 45%),
+                  linear-gradient(180deg, #FCFBF7 0%, #F9F7F1 100%);
     }
 
     /* Strict 9:16 Portrait Photo Frame */
     .photo-frame-9-16 {
       position: relative;
       overflow: hidden;
-      background: linear-gradient(145deg, #f8fafc 0%, #eff6ff 100%);
-      border-radius: 16px;
-      border: 2px solid #dbeafe;
-      box-shadow: 0 8px 20px -6px rgba(11, 40, 99, 0.14);
+      background: linear-gradient(160deg, #ffffff 0%, #f1f5f9 100%);
+      border-radius: 18px;
+      border: 2px solid #e2e8f0;
+      box-shadow: 0 10px 24px -8px rgba(11, 40, 99, 0.14);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -110,7 +115,8 @@
     }
 
     .photo-frame-9-16.is-empty {
-      border: 2.5px dashed #cbd5e1;
+      border: 2px dashed #cbd5e1;
+      background: #ffffff;
       box-shadow: none;
     }
 
@@ -171,11 +177,11 @@
 <body class="min-h-screen flex flex-col pb-12 lg:pb-0" data-mobile-view="editor">
 
   <!-- ==================== TOP NAVIGATION BAR ==================== -->
-  <header class="no-print sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 px-3 sm:px-6 py-2.5 sm:py-3 shadow-xs">
+  <header class="no-print sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 px-3 sm:px-6 py-2.5 sm:py-3 shadow-2xs">
     <div class="max-w-[1600px] mx-auto flex items-center justify-between gap-2">
       <!-- Brand Identity -->
       <div class="flex items-center gap-2.5 min-w-0">
-        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center p-1.5 shadow-2xs shrink-0">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-50 border border-amber-200/80 flex items-center justify-center p-1.5 shadow-2xs shrink-0">
           <svg viewBox="0 0 512 560" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M256 105C220 55 155 30 95 55C30 82 5 155 25 230C48 315 135 395 256 470C377 395 464 315 487 230C507 155 482 82 417 55C357 30 292 55 256 105Z" stroke="#1D8FE1" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
             <circle cx="256" cy="196" r="42" fill="#F7B519"/>
@@ -189,11 +195,11 @@
             <h1 class="text-sm sm:text-lg font-extrabold text-ahava-navy tracking-tight leading-tight truncate">
               Yayasan Ahava Indonesia
             </h1>
-            <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-50 text-ahava-blue border border-blue-200 shrink-0">
-              A4 PDF Generator
+            <span class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200 shrink-0">
+              Edisi Editorial A4
             </span>
           </div>
-          <p class="text-[11px] sm:text-xs text-slate-500 truncate">Ucapan Terima Kasih & Tanda Terima • 12 Foto 9:16</p>
+          <p class="text-[11px] sm:text-xs text-slate-500 truncate">Ucapan Terima Kasih & Sertifikat Donasi • 12 Foto 9:16</p>
         </div>
       </div>
 
@@ -209,7 +215,7 @@
           <span class="hidden sm:inline">Simpan</span>
         </button>
 
-        <button onclick="printExactPDF()" type="button" class="hidden sm:flex px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-ahava-navy bg-amber-300 hover:bg-amber-400 border border-amber-400 shadow-xs transition items-center gap-1.5 cursor-pointer" title="Cetak atau Simpan sebagai PDF Vektor 100% Presisi">
+        <button onclick="printExactPDF()" type="button" class="hidden sm:flex px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-ahava-navy bg-amber-300 hover:bg-amber-400 border border-amber-400 shadow-2xs transition items-center gap-1.5 cursor-pointer" title="Cetak atau Simpan sebagai PDF Vektor 100% Presisi">
           <i class="fa-solid fa-print"></i>
           <span class="hidden md:inline">Cetak Vektor</span>
         </button>
@@ -242,7 +248,7 @@
 
       <!-- Compact 2-Tab Navigation -->
       <div class="p-2.5 sm:p-3 bg-slate-50 border-b border-slate-200 grid grid-cols-2 gap-2">
-        <button type="button" onclick="switchEditorTab('tab-utama', 2)" id="btn-tab-utama" class="tab-btn active px-3 py-2.5 rounded-xl text-xs font-bold bg-ahava-navy text-white border border-ahava-navy shadow-xs transition flex items-center justify-center gap-2 cursor-pointer">
+        <button type="button" onclick="switchEditorTab('tab-utama', 2)" id="btn-tab-utama" class="tab-btn active px-3 py-2.5 rounded-xl text-xs font-bold bg-ahava-navy text-white border border-ahava-navy shadow-2xs transition flex items-center justify-center gap-2 cursor-pointer">
           <i class="fa-solid fa-pen-to-square"></i>
           <span>Data & Teks Surat</span>
         </button>
@@ -259,12 +265,12 @@
         <div id="tab-utama" class="editor-tab-content space-y-4">
 
           <!-- Core Donor & Receipt Card -->
-          <div class="p-3.5 rounded-2xl bg-gradient-to-br from-blue-50/80 to-indigo-50/50 border border-blue-100 space-y-3">
+          <div class="p-3.5 rounded-2xl bg-gradient-to-br from-amber-50/70 via-orange-50/30 to-blue-50/50 border border-amber-200/70 space-y-3">
             <div class="flex items-center justify-between">
               <span class="text-xs font-extrabold uppercase tracking-wider text-ahava-navy flex items-center gap-1.5">
-                <i class="fa-solid fa-receipt text-ahava-blue"></i> Data Utama Donatur
+                <i class="fa-solid fa-award text-ahava-gold"></i> Data Utama Donatur
               </span>
-              <span class="text-[11px] font-semibold text-ahava-blue">Halaman 2</span>
+              <span class="text-[11px] font-bold text-amber-800 bg-amber-100/80 px-2 py-0.5 rounded-md">Halaman 2</span>
             </div>
 
             <div>
@@ -378,13 +384,13 @@
         <div id="tab-foto" class="editor-tab-content hidden space-y-3.5">
 
           <!-- Monthly Album Switcher & Bulk Upload -->
-          <div class="p-3 rounded-xl bg-blue-50/70 border border-blue-100 space-y-2.5">
+          <div class="p-3 rounded-xl bg-amber-50/70 border border-amber-200/80 space-y-2.5">
             <div class="flex items-center justify-between gap-2">
               <div class="flex items-center gap-1.5">
-                <i class="fa-regular fa-calendar-check text-ahava-blue text-xs"></i>
+                <i class="fa-regular fa-calendar-check text-ahava-gold text-xs"></i>
                 <span class="text-xs font-extrabold text-ahava-navy">Album: <span id="active-album-badge" class="text-ahava-blue">November</span></span>
               </div>
-              <select id="select-month-photo-tab" onchange="handleMonthPresetChange(this.value)" class="px-2.5 py-1.5 rounded-lg border border-blue-200 bg-white text-xs font-bold text-ahava-navy focus:ring-2 focus:ring-ahava-blue outline-none">
+              <select id="select-month-photo-tab" onchange="handleMonthPresetChange(this.value)" class="px-2.5 py-1.5 rounded-lg border border-amber-200 bg-white text-xs font-bold text-ahava-navy focus:ring-2 focus:ring-ahava-blue outline-none">
                 <option value="Januari">Januari</option>
                 <option value="Februari">Februari</option>
                 <option value="Maret">Maret</option>
@@ -401,8 +407,8 @@
             </div>
 
             <div class="flex items-center gap-2">
-              <label class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-ahava-blue hover:bg-blue-700 text-white text-xs font-bold cursor-pointer shadow-xs transition">
-                <i class="fa-solid fa-cloud-arrow-up"></i>
+              <label class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-ahava-navy hover:bg-ahava-royal text-white text-xs font-bold cursor-pointer shadow-2xs transition">
+                <i class="fa-solid fa-cloud-arrow-up text-amber-300"></i>
                 <span>Unggah Sekaligus (Maks 12 Foto)</span>
                 <input type="file" accept="image/*" multiple onchange="handleBulkPhotoUpload(event)" class="hidden" />
               </label>
@@ -411,7 +417,7 @@
               </button>
             </div>
             <p class="text-[11px] text-slate-600 leading-snug">
-              Rasio bingkai terkunci <strong>9:16 (Portrait)</strong> dengan <strong>4 foto per halaman</strong> (Hal 3, 4, 5). Foto yang lebih lebar/panjang tampil 100% utuh tanpa terpotong.
+              Bingkai berasio <strong>9:16 (Portrait)</strong> dengan <strong>4 foto per halaman</strong> (Hal 3, 4, 5). Foto tampil 100% utuh proporsional tanpa terpotong.
             </p>
           </div>
 
@@ -419,7 +425,7 @@
           <div>
             <h3 class="text-[11px] font-extrabold uppercase tracking-wider text-ahava-navy mb-2 flex items-center gap-1.5">
               <span class="w-4 h-4 rounded bg-ahava-navy text-white inline-flex items-center justify-center text-[10px]">3</span>
-              Halaman 3 — Kolase 4 Foto 9:16 (Foto 1–4)
+              Halaman 3 — Dokumentasi Foto 1–4
             </h3>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-2" id="photo-slots-h3"></div>
           </div>
@@ -428,7 +434,7 @@
           <div class="pt-2 border-t border-slate-100">
             <h3 class="text-[11px] font-extrabold uppercase tracking-wider text-ahava-navy mb-2 flex items-center gap-1.5">
               <span class="w-4 h-4 rounded bg-ahava-navy text-white inline-flex items-center justify-center text-[10px]">4</span>
-              Halaman 4 — Kolase 4 Foto 9:16 (Foto 5–8)
+              Halaman 4 — Dokumentasi Foto 5–8
             </h3>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-2" id="photo-slots-h4"></div>
           </div>
@@ -437,7 +443,7 @@
           <div class="pt-2 border-t border-slate-100">
             <h3 class="text-[11px] font-extrabold uppercase tracking-wider text-ahava-navy mb-2 flex items-center gap-1.5">
               <span class="w-4 h-4 rounded bg-ahava-navy text-white inline-flex items-center justify-center text-[10px]">5</span>
-              Halaman 5 — Kolase 4 Foto 9:16 (Foto 9–12)
+              Halaman 5 — Dokumentasi Foto 9–12
             </h3>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-2" id="photo-slots-h5"></div>
           </div>
@@ -448,9 +454,9 @@
       <!-- Mobile Quick Next Step CTA inside Editor -->
       <div class="lg:hidden p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-2">
         <span class="text-[11px] font-semibold text-slate-500">Selesai mengisi data & foto?</span>
-        <button type="button" onclick="setMobileView('preview')" class="px-4 py-2 rounded-xl bg-ahava-blue text-white text-xs font-bold shadow-xs flex items-center gap-1.5 cursor-pointer">
+        <button type="button" onclick="setMobileView('preview')" class="px-4 py-2 rounded-xl bg-ahava-navy text-white text-xs font-bold shadow-2xs flex items-center gap-1.5 cursor-pointer">
           <span>Lihat Pratinjau A4</span>
-          <i class="fa-solid fa-arrow-right"></i>
+          <i class="fa-solid fa-arrow-right text-amber-300"></i>
         </button>
       </div>
     </aside>
@@ -462,7 +468,7 @@
       <div class="no-print bg-white rounded-2xl border border-slate-200 px-3 sm:px-4 py-2.5 mb-3 sm:mb-4 flex flex-wrap items-center justify-between gap-2 shadow-2xs">
         <div class="flex items-center gap-2">
           <span class="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span class="text-xs font-bold text-slate-700">Pratinjau A4 Portrait (210 × 297 mm)</span>
+          <span class="text-xs font-bold text-slate-700">Pratinjau Edisi Editorial A4 (210 × 297 mm)</span>
         </div>
 
         <!-- Quick Page Jump & Zoom Controls -->
@@ -480,7 +486,7 @@
             <button type="button" onclick="adjustZoom(-0.08)" class="w-6 h-6 rounded-lg hover:bg-white text-slate-600 text-xs flex items-center justify-center cursor-pointer" title="Perkecil">
               <i class="fa-solid fa-minus"></i>
             </button>
-            <span id="zoom-label" class="text-[11px] font-bold text-slate-700 w-9 text-center">70%</span>
+            <span id="zoom-label" class="text-[11px] font-bold text-slate-700 w-9 text-center">72%</span>
             <button type="button" onclick="adjustZoom(0.08)" class="w-6 h-6 rounded-lg hover:bg-white text-slate-600 text-xs flex items-center justify-center cursor-pointer" title="Perbesar">
               <i class="fa-solid fa-plus"></i>
             </button>
@@ -493,155 +499,102 @@
         <div id="pages-zoom-wrapper" class="flex flex-col items-center gap-8 transition-transform duration-200 origin-top">
 
           <!-- ===================================================================== -->
-          <!-- PAGE 1 (A4: 794 x 1123 px): KATA SAMBUTAN & UCAPAN TERIMA KASIH       -->
+          <!-- PAGE 1 (A4): EDITORIAL COVER LETTER — KATA SAMBUTAN & APPRECIATION    -->
           <!-- ===================================================================== -->
           <div id="page-wrapper-1" class="page-wrapper flex flex-col items-center">
-            <div class="no-print text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Halaman 1 — Surat Ucapan Terima Kasih (A4)</div>
-            <div id="pdf-page-1" class="pdf-page pdf-diagonal-bg">
+            <div class="no-print text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Halaman 1 — Surat Apresiasi Editorial (A4)</div>
+            <div id="pdf-page-1" class="pdf-page editorial-paper">
 
-              <!-- Top-Left Geometric Ornament -->
-              <svg class="absolute top-0 left-0 w-[124px] h-[124px] pointer-events-none z-0" viewBox="0 0 160 160" fill="none">
-                <path d="M0 80A80 80 0 0 1 80 0V80H0Z" fill="#1CC6E8"/>
-                <path d="M34 80A46 46 0 0 1 80 34V80H34Z" fill="#F7B519"/>
-                <path d="M80 0H160A80 80 0 0 1 80 80V0Z" fill="#1668E3"/>
-                <rect x="0" y="80" width="80" height="80" fill="#0B2863"/>
-                <rect x="24" y="104" width="32" height="32" fill="#1CC6E8"/>
-                <circle cx="120" cy="120" r="40" fill="#1CC6E8"/>
-                <circle cx="120" cy="120" r="19" fill="#0B2863"/>
+              <!-- Top Navy & Gold Editorial Ribbon Bar -->
+              <div class="absolute top-0 left-0 w-[794px] h-[14px] bg-ahava-navy pointer-events-none z-0"></div>
+              <div class="absolute top-[14px] left-0 w-[794px] h-[5px] bg-ahava-amber pointer-events-none z-0"></div>
+
+              <!-- Soft Corner Botanical/Ribbon Curves (Top-Right) -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" class="absolute top-[19px] left-[554px] w-[240px] h-[240px] pointer-events-none z-0" viewBox="0 0 240 240" fill="none">
+                <path d="M240 0H110C125 78 175 135 240 155V0Z" fill="#0B2863" fill-opacity="0.06"/>
+                <path d="M240 0H165C175 55 202 92 240 108V0Z" fill="#F7B519" fill-opacity="0.22"/>
+                <circle cx="195" cy="48" r="7" fill="#1CC6E8" fill-opacity="0.45"/>
               </svg>
 
-              <!-- Top-Right Geometric Ornament -->
-              <svg class="absolute top-0 right-0 w-[184px] h-[184px] pointer-events-none z-0" viewBox="0 0 240 240" fill="none">
-                <rect x="0" y="0" width="40" height="80" fill="#F7B519"/>
-                <polygon points="40,0 40,80 0,40" fill="#0B2863"/>
-                <rect x="40" y="0" width="40" height="80" fill="#F7B519"/>
-                <polygon points="80,0 80,80 40,40" fill="#0B2863"/>
-                <rect x="80" y="0" width="80" height="80" fill="#1668E3"/>
-                <path d="M80 0C102 0 120 18 120 40C98 40 80 22 80 0Z" fill="#85D5FF"/>
-                <path d="M160 0C160 22 142 40 120 40C120 18 138 0 160 0Z" fill="#85D5FF"/>
-                <path d="M80 80C80 58 98 40 120 40C120 62 102 80 80 80Z" fill="#85D5FF"/>
-                <path d="M160 80C138 80 120 62 120 40C142 40 160 58 160 80Z" fill="#85D5FF"/>
-                <path d="M200 0H240V80H200A40 40 0 0 1 200 0Z" fill="#1668E3"/>
-                <circle cx="204" cy="40" r="18" fill="#0B2863"/>
-                <rect x="80" y="80" width="80" height="80" fill="#F7B519"/>
-                <polygon points="120,80 160,120 120,160 80,120" fill="#FFFFFF"/>
-                <path d="M160 80A80 80 0 0 0 240 160H160V80Z" fill="#1668E3"/>
-                <path d="M182 80A58 58 0 0 0 240 138V116A36 36 0 0 1 204 80H182Z" fill="#FFFFFF"/>
-                <path d="M204 80A36 36 0 0 0 240 116V80H204Z" fill="#85D5FF"/>
-                <path d="M80 160C102 160 120 178 120 200C98 200 80 182 80 160Z" fill="#0B2863"/>
-                <path d="M160 160C160 182 142 200 120 200C120 178 138 160 160 160Z" fill="#0B2863"/>
-                <path d="M80 240C80 218 98 200 120 200C120 222 102 240 80 240Z" fill="#0B2863"/>
-                <path d="M160 240C138 240 120 222 120 200C142 200 160 218 160 240Z" fill="#0B2863"/>
+              <!-- Soft Corner Curves (Bottom-Left) -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="240" height="220" class="absolute top-[890px] left-0 w-[240px] h-[220px] pointer-events-none z-0" viewBox="0 0 240 220" fill="none">
+                <path d="M0 220H150C132 135 78 82 0 62V220Z" fill="#0B2863" fill-opacity="0.06"/>
+                <path d="M0 220H95C82 162 46 125 0 110V220Z" fill="#1CC6E8" fill-opacity="0.16"/>
               </svg>
 
-              <!-- Decorative Dots Top-Left -->
-              <div class="absolute top-[138px] left-[22px] grid grid-cols-3 gap-2.5 opacity-85 pointer-events-none">
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-              </div>
+              <!-- Bottom Navy & Gold Footer Strip -->
+              <div class="absolute top-[1104px] left-0 w-[794px] h-[5px] bg-ahava-amber pointer-events-none z-0"></div>
+              <div class="absolute top-[1109px] left-0 w-[794px] h-[14px] bg-ahava-navy pointer-events-none z-0"></div>
 
-              <!-- Bottom-Left Geometric Ornament -->
-              <svg class="absolute bottom-0 left-0 w-[184px] h-[184px] pointer-events-none z-0" viewBox="0 0 240 240" fill="none">
-                <path d="M80 0C102 0 120 18 120 40C98 40 80 22 80 0Z" fill="#0B2863"/>
-                <path d="M160 0C160 22 142 40 120 40C120 18 138 0 160 0Z" fill="#0B2863"/>
-                <path d="M80 80C80 58 98 40 120 40C120 62 102 80 80 80Z" fill="#0B2863"/>
-                <path d="M160 80C138 80 120 62 120 40C142 40 160 58 160 80Z" fill="#0B2863"/>
-                <path d="M0 80A80 80 0 0 1 80 160H0V80Z" fill="#1668E3"/>
-                <path d="M0 102A58 58 0 0 1 58 160H36A36 36 0 0 0 0 124V102Z" fill="#FFFFFF"/>
-                <path d="M0 124A36 36 0 0 1 36 160H0V124Z" fill="#85D5FF"/>
-                <rect x="80" y="80" width="80" height="80" fill="#F7B519"/>
-                <polygon points="120,80 160,120 120,160 80,120" fill="#FFFFFF"/>
-                <circle cx="200" cy="120" r="40" fill="#FFFFFF"/>
-                <circle cx="200" cy="120" r="19" fill="#85D5FF"/>
-                <path d="M0 160H40A40 40 0 0 1 40 240H0V160Z" fill="#1668E3"/>
-                <circle cx="36" cy="200" r="18" fill="#0B2863"/>
-                <rect x="80" y="160" width="80" height="80" fill="#1668E3"/>
-                <path d="M80 160C102 160 120 178 120 200C98 200 80 182 80 160Z" fill="#85D5FF"/>
-                <path d="M160 160C160 182 142 200 120 200C120 178 138 160 160 160Z" fill="#85D5FF"/>
-                <path d="M80 240C80 218 98 200 120 200C120 222 102 240 80 240Z" fill="#85D5FF"/>
-                <path d="M160 240C138 240 120 222 120 200C142 200 160 218 160 240Z" fill="#85D5FF"/>
-                <rect x="160" y="160" width="40" height="80" fill="#F7B519"/>
-                <polygon points="160,160 160,240 200,200" fill="#0B2863"/>
-                <rect x="200" y="160" width="40" height="80" fill="#F7B519"/>
-                <polygon points="200,160 200,240 240,200" fill="#0B2863"/>
-              </svg>
+              <!-- CONTENT SAFE AREA -->
+              <div class="relative z-10 h-full flex flex-col justify-between px-[68px] pt-[58px] pb-[56px]">
 
-              <!-- Bottom-Right Geometric Ornament -->
-              <svg class="absolute bottom-0 right-0 w-[124px] h-[124px] pointer-events-none z-0" viewBox="0 0 160 160" fill="none">
-                <circle cx="40" cy="40" r="40" fill="#1CC6E8"/>
-                <circle cx="40" cy="40" r="19" fill="#0B2863"/>
-                <rect x="80" y="0" width="80" height="80" fill="#0B2863"/>
-                <rect x="104" y="24" width="32" height="32" fill="#1CC6E8"/>
-                <path d="M0 160A80 80 0 0 1 80 80V160H0Z" fill="#1668E3"/>
-                <path d="M80 80H160A80 80 0 0 1 80 160V80Z" fill="#1CC6E8"/>
-                <path d="M80 80H126A46 46 0 0 1 80 126V80Z" fill="#F7B519"/>
-              </svg>
+                <!-- Top Header: Left Brand + Right Month Pill -->
+                <div class="flex items-center justify-between pb-5 border-b border-amber-200/80">
+                  <div class="flex items-center gap-4">
+                    <svg viewBox="0 0 512 560" class="w-[56px] h-[62px] shrink-0" fill="none">
+                      <path d="M256 105C220 55 155 30 95 55C30 82 5 155 25 230C48 315 135 395 256 470C377 395 464 315 487 230C507 155 482 82 417 55C357 30 292 55 256 105Z" stroke="#1D8FE1" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="256" cy="196" r="42" fill="#F7B519"/>
+                      <path d="M352 80C382 135 362 215 274 286L318 332C408 255 422 145 352 80Z" fill="#6B1DC6"/>
+                      <path d="M193 386L56 560L172 515L255 432L193 386Z" fill="#6B1DC6"/>
+                      <path d="M154 80C84 145 98 255 188 332L354 522L452 560L382 412C280 285 112 205 154 80Z" fill="#EA6B97"/>
+                    </svg>
+                    <div class="text-ahava-navy leading-none">
+                      <div class="text-[24px] tracking-wide font-normal">YAYASAN <span class="font-extrabold">AHAVA</span></div>
+                      <div class="text-[24px] tracking-wide font-extrabold mt-1">INDONESIA</div>
+                    </div>
+                  </div>
 
-              <!-- CONTENT SAFE AREA (A4: 794x1123) -->
-              <div class="relative z-10 h-full flex flex-col justify-between px-[82px] pt-[122px] pb-[182px]">
-
-                <!-- Header Brand Block -->
-                <div class="flex items-center justify-center gap-4">
-                  <svg viewBox="0 0 512 560" class="w-[62px] h-[68px] shrink-0" fill="none">
-                    <path d="M256 105C220 55 155 30 95 55C30 82 5 155 25 230C48 315 135 395 256 470C377 395 464 315 487 230C507 155 482 82 417 55C357 30 292 55 256 105Z" stroke="#1D8FE1" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="256" cy="196" r="42" fill="#F7B519"/>
-                    <path d="M352 80C382 135 362 215 274 286L318 332C408 255 422 145 352 80Z" fill="#6B1DC6"/>
-                    <path d="M193 386L56 560L172 515L255 432L193 386Z" fill="#6B1DC6"/>
-                    <path d="M154 80C84 145 98 255 188 332L354 522L452 560L382 412C280 285 112 205 154 80Z" fill="#EA6B97"/>
-                  </svg>
-                  <div class="text-ahava-navy leading-none">
-                    <div class="text-[28px] tracking-wide font-normal">YAYASAN <span class="font-extrabold">AHAVA</span></div>
-                    <div class="text-[28px] tracking-wide font-extrabold mt-1">INDONESIA</div>
+                  <div class="text-right">
+                    <div class="text-[11px] font-bold uppercase tracking-[0.2em] text-amber-700">Laporan Apresiasi</div>
+                    <div id="prev-p1-month" class="text-[16px] font-extrabold text-ahava-navy mt-0.5">November</div>
                   </div>
                 </div>
 
-                <!-- Main Letter Body -->
-                <div class="my-auto py-4 text-slate-900">
-                  <h2 id="prev-salutation" class="text-[25px] font-extrabold text-ahava-navy mb-5 tracking-tight">
+                <!-- Main Editorial Letter Card -->
+                <div class="my-auto bg-white/95 rounded-[26px] border border-slate-200/90 shadow-[0_14px_34px_-12px_rgba(11,40,99,0.08)] px-[46px] py-[42px] relative">
+                  <!-- Left Vertical Gold Accent -->
+                  <div class="absolute top-[42px] bottom-[42px] left-0 w-[6px] rounded-r-full bg-gradient-to-b from-ahava-navy via-ahava-amber to-ahava-cyan"></div>
+
+                  <div class="text-[11px] font-extrabold uppercase tracking-[0.22em] text-amber-700 mb-1.5">Surat Ucapan Terima Kasih</div>
+                  <h2 id="prev-salutation" class="font-display text-[32px] font-bold text-ahava-navy mb-6 tracking-tight leading-tight">
                     Dear Sahabat Ahava
                   </h2>
 
-                  <div class="space-y-5 text-[17.5px] leading-[1.68] text-slate-800 text-justify font-normal">
+                  <div class="space-y-4 text-[16.8px] leading-[1.72] text-slate-700 text-justify font-normal">
                     <p id="prev-p1">
                       Puji syukur kami panjatkan kepada Tuhan Yang Maha Esa atas kasih dan penyertaan-Nya. Dengan tulus, kami mengucapkan terima kasih atas kebaikan hati dan dukungan yang telah diberikan kepada Yayasan Ahava Indonesia. Setiap bantuan yang disampaikan telah menjadi kekuatan besar bagi kami untuk terus menjalankan misi berbagi dan melayani sesama yang hidup dalam keterbatasan.
                     </p>
                     <p id="prev-p2">
                       Semoga segala kebaikan yang telah Anda bagikan dibalas Tuhan dengan berlipat ganda, serta menjadi sumber berkat bagi banyak orang.
                     </p>
-                    <p id="prev-p3">
-                      Perjalanan pelayanan ini berawal dari langkah hanya 25 porsi makan siang yang dapat kami bagikan setiap hari. Namun berkat kasih Tuhan dan kepedulian begitu banyak pihak, perlahan namun pasti, pelayanan ini terus berkembang. Dari 25 porsi, hingga hari ini kami dapat membagikan 800 porsi makan siang setiap hari kepada para lansia, dan masyarakat yang hidup dalam kesulitan.
-                    </p>
+                    <!-- Highlighted Impact Callout Box -->
+                    <div class="p-4 rounded-2xl bg-[#F8FAFC] border-l-4 border-ahava-navy text-slate-800">
+                      <p id="prev-p3" class="text-[16px] leading-[1.68]">
+                        Perjalanan pelayanan ini berawal dari langkah hanya 25 porsi makan siang yang dapat kami bagikan setiap hari. Namun berkat kasih Tuhan dan kepedulian begitu banyak pihak, perlahan namun pasti, pelayanan ini terus berkembang. Dari 25 porsi, hingga hari ini kami dapat membagikan 800 porsi makan siang setiap hari kepada para lansia, dan masyarakat yang hidup dalam kesulitan.
+                      </p>
+                    </div>
                     <p id="prev-p4">
                       Atas perhatian dan kepercayaannya, kami menyampaikan rasa hormat dan penghargaan yang sebesar-besarnya.
                     </p>
                   </div>
                 </div>
 
-                <!-- Footer: Text Instagram Handle (Left) & Signature (Right) -->
-                <div class="flex items-end justify-between gap-6 pt-2">
-                  <!-- Clean Instagram Text Only -->
-                  <div class="pl-[108px] pb-1">
-                    <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-blue-50/90 border border-blue-200/80">
-                      <i class="fa-brands fa-instagram text-ahava-navy text-[18px]"></i>
-                      <div class="leading-tight">
-                        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Instagram AHAVA Indonesia</div>
-                        <div id="prev-ig-handle" class="text-[15px] font-extrabold text-ahava-navy">@ahavaindonesia</div>
-                      </div>
+                <!-- Footer: Instagram Handle Text (Left) & Signature (Right) -->
+                <div class="flex items-end justify-between gap-6 pt-3">
+                  <div class="inline-flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white border border-slate-200 shadow-2xs">
+                    <div class="w-9 h-9 rounded-xl bg-ahava-navy text-amber-300 flex items-center justify-center text-[17px]">
+                      <i class="fa-brands fa-instagram"></i>
+                    </div>
+                    <div class="leading-tight">
+                      <div class="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">Instagram Resmi</div>
+                      <div id="prev-ig-handle" class="text-[15px] font-extrabold text-ahava-navy">@ahavaindonesia</div>
                     </div>
                   </div>
 
-                  <!-- Signature -->
-                  <div class="text-right text-[18.5px] leading-snug text-slate-900 pr-[48px] pb-1">
-                    <div class="font-normal">Hormat kami,</div>
-                    <div class="font-bold mt-2 text-ahava-navy">Yayasan AHAVA</div>
-                    <div class="font-bold text-ahava-navy">Indonesia</div>
+                  <div class="text-right text-[17.5px] leading-snug text-slate-800">
+                    <div class="text-slate-500 text-[15px]">Hormat kami,</div>
+                    <div class="font-extrabold mt-1.5 text-ahava-navy text-[19px]">Yayasan AHAVA Indonesia</div>
                   </div>
                 </div>
 
@@ -650,145 +603,97 @@
           </div>
 
           <!-- ===================================================================== -->
-          <!-- PAGE 2 (A4: 794 x 1123 px): TANDA TERIMA DONASI (HIGHLIGHTED)         -->
+          <!-- PAGE 2 (A4): SERTIFIKAT TANDA TERIMA DONASI (CLASSIC DOUBLE BORDER)   -->
           <!-- ===================================================================== -->
           <div id="page-wrapper-2" class="page-wrapper flex flex-col items-center">
-            <div class="no-print text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Halaman 2 — Tanda Terima Donasi (A4)</div>
-            <div id="pdf-page-2" class="pdf-page pdf-diagonal-bg">
+            <div class="no-print text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Halaman 2 — Sertifikat Tanda Terima Donasi (A4)</div>
+            <div id="pdf-page-2" class="pdf-page editorial-paper">
 
-              <!-- Top-Left Geometric Ornament -->
-              <svg class="absolute top-0 left-0 w-[124px] h-[124px] pointer-events-none z-0" viewBox="0 0 160 160" fill="none">
-                <path d="M0 80A80 80 0 0 1 80 0V80H0Z" fill="#1CC6E8"/>
-                <path d="M34 80A46 46 0 0 1 80 34V80H34Z" fill="#F7B519"/>
-                <path d="M80 0H160A80 80 0 0 1 80 80V0Z" fill="#1668E3"/>
-                <rect x="0" y="80" width="80" height="80" fill="#0B2863"/>
-                <rect x="24" y="104" width="32" height="32" fill="#1CC6E8"/>
-                <circle cx="120" cy="120" r="40" fill="#1CC6E8"/>
-                <circle cx="120" cy="120" r="19" fill="#0B2863"/>
-              </svg>
+              <!-- Classic Double Certificate Frame -->
+              <div class="absolute top-[28px] left-[28px] w-[738px] h-[1067px] rounded-[28px] border-[3px] border-ahava-navy pointer-events-none z-0"></div>
+              <div class="absolute top-[38px] left-[38px] w-[718px] h-[1047px] rounded-[22px] border-[1.5px] border-ahava-amber pointer-events-none z-0"></div>
 
-              <!-- Top-Right Geometric Ornament -->
-              <svg class="absolute top-0 right-0 w-[184px] h-[184px] pointer-events-none z-0" viewBox="0 0 240 240" fill="none">
-                <rect x="0" y="0" width="40" height="80" fill="#F7B519"/>
-                <polygon points="40,0 40,80 0,40" fill="#0B2863"/>
-                <rect x="40" y="0" width="40" height="80" fill="#F7B519"/>
-                <polygon points="80,0 80,80 40,40" fill="#0B2863"/>
-                <rect x="80" y="0" width="80" height="80" fill="#1668E3"/>
-                <path d="M80 0C102 0 120 18 120 40C98 40 80 22 80 0Z" fill="#85D5FF"/>
-                <path d="M160 0C160 22 142 40 120 40C120 18 138 0 160 0Z" fill="#85D5FF"/>
-                <path d="M80 80C80 58 98 40 120 40C120 62 102 80 80 80Z" fill="#85D5FF"/>
-                <path d="M160 80C138 80 120 62 120 40C142 40 160 58 160 80Z" fill="#85D5FF"/>
-                <path d="M200 0H240V80H200A40 40 0 0 1 200 0Z" fill="#1668E3"/>
-                <circle cx="204" cy="40" r="18" fill="#0B2863"/>
-                <rect x="80" y="80" width="80" height="80" fill="#F7B519"/>
-                <polygon points="120,80 160,120 120,160 80,120" fill="#FFFFFF"/>
-                <path d="M160 80A80 80 0 0 0 240 160H160V80Z" fill="#1668E3"/>
-                <path d="M182 80A58 58 0 0 0 240 138V116A36 36 0 0 1 204 80H182Z" fill="#FFFFFF"/>
-                <path d="M204 80A36 36 0 0 0 240 116V80H204Z" fill="#85D5FF"/>
-                <path d="M80 160C102 160 120 178 120 200C98 200 80 182 80 160Z" fill="#0B2863"/>
-                <path d="M160 160C160 182 142 200 120 200C120 178 138 160 160 160Z" fill="#0B2863"/>
-                <path d="M80 240C80 218 98 200 120 200C120 222 102 240 80 240Z" fill="#0B2863"/>
-                <path d="M160 240C138 240 120 222 120 200C142 200 160 218 160 240Z" fill="#0B2863"/>
-              </svg>
+              <!-- Corner Gold Diamonds -->
+              <div class="absolute top-[23px] left-[23px] w-3 h-3 rotate-45 bg-ahava-amber pointer-events-none z-0"></div>
+              <div class="absolute top-[23px] left-[759px] w-3 h-3 rotate-45 bg-ahava-amber pointer-events-none z-0"></div>
+              <div class="absolute top-[1088px] left-[23px] w-3 h-3 rotate-45 bg-ahava-amber pointer-events-none z-0"></div>
+              <div class="absolute top-[1088px] left-[759px] w-3 h-3 rotate-45 bg-ahava-amber pointer-events-none z-0"></div>
 
-              <!-- Bottom-Left Geometric Ornament -->
-              <svg class="absolute bottom-0 left-0 w-[184px] h-[184px] pointer-events-none z-0" viewBox="0 0 240 240" fill="none">
-                <path d="M80 0C102 0 120 18 120 40C98 40 80 22 80 0Z" fill="#0B2863"/>
-                <path d="M160 0C160 22 142 40 120 40C120 18 138 0 160 0Z" fill="#0B2863"/>
-                <path d="M80 80C80 58 98 40 120 40C120 62 102 80 80 80Z" fill="#0B2863"/>
-                <path d="M160 80C138 80 120 62 120 40C142 40 160 58 160 80Z" fill="#0B2863"/>
-                <path d="M0 80A80 80 0 0 1 80 160H0V80Z" fill="#1668E3"/>
-                <path d="M0 102A58 58 0 0 1 58 160H36A36 36 0 0 0 0 124V102Z" fill="#FFFFFF"/>
-                <path d="M0 124A36 36 0 0 1 36 160H0V124Z" fill="#85D5FF"/>
-                <rect x="80" y="80" width="80" height="80" fill="#F7B519"/>
-                <polygon points="120,80 160,120 120,160 80,120" fill="#FFFFFF"/>
-                <circle cx="200" cy="120" r="40" fill="#FFFFFF"/>
-                <circle cx="200" cy="120" r="19" fill="#85D5FF"/>
-                <path d="M0 160H40A40 40 0 0 1 40 240H0V160Z" fill="#1668E3"/>
-                <circle cx="36" cy="200" r="18" fill="#0B2863"/>
-                <rect x="80" y="160" width="80" height="80" fill="#1668E3"/>
-                <path d="M80 160C102 160 120 178 120 200C98 200 80 182 80 160Z" fill="#85D5FF"/>
-                <path d="M160 160C160 182 142 200 120 200C120 178 138 160 160 160Z" fill="#85D5FF"/>
-                <path d="M80 240C80 218 98 200 120 200C120 222 102 240 80 240Z" fill="#85D5FF"/>
-                <path d="M160 240C138 240 120 222 120 200C142 200 160 218 160 240Z" fill="#85D5FF"/>
-                <rect x="160" y="160" width="40" height="80" fill="#F7B519"/>
-                <polygon points="160,160 160,240 200,200" fill="#0B2863"/>
-                <rect x="200" y="160" width="40" height="80" fill="#F7B519"/>
-                <polygon points="200,160 200,240 240,200" fill="#0B2863"/>
-              </svg>
+              <!-- CONTENT SAFE AREA -->
+              <div class="relative z-10 h-full flex flex-col justify-between px-[76px] pt-[74px] pb-[74px]">
 
-              <!-- Bottom-Right Geometric Ornament -->
-              <svg class="absolute bottom-0 right-0 w-[124px] h-[124px] pointer-events-none z-0" viewBox="0 0 160 160" fill="none">
-                <circle cx="40" cy="40" r="40" fill="#1CC6E8"/>
-                <circle cx="40" cy="40" r="19" fill="#0B2863"/>
-                <rect x="80" y="0" width="80" height="80" fill="#0B2863"/>
-                <rect x="104" y="24" width="32" height="32" fill="#1CC6E8"/>
-                <path d="M0 160A80 80 0 0 1 80 80V160H0Z" fill="#1668E3"/>
-                <path d="M80 80H160A80 80 0 0 1 80 160V80Z" fill="#1CC6E8"/>
-                <path d="M80 80H126A46 46 0 0 1 80 126V80Z" fill="#F7B519"/>
-              </svg>
-
-              <!-- CONTENT SAFE AREA (A4: 794x1123) -->
-              <div class="relative z-10 h-full flex flex-col justify-between px-[82px] pt-[124px] pb-[182px]">
-
-                <!-- Header: Yayasan Ahava Logo -->
-                <div class="flex items-center justify-center gap-4">
-                  <svg viewBox="0 0 512 560" class="w-[62px] h-[68px] shrink-0" fill="none">
-                    <path d="M256 105C220 55 155 30 95 55C30 82 5 155 25 230C48 315 135 395 256 470C377 395 464 315 487 230C507 155 482 82 417 55C357 30 292 55 256 105Z" stroke="#1D8FE1" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="256" cy="196" r="42" fill="#F7B519"/>
-                    <path d="M352 80C382 135 362 215 274 286L318 332C408 255 422 145 352 80Z" fill="#6B1DC6"/>
-                    <path d="M193 386L56 560L172 515L255 432L193 386Z" fill="#6B1DC6"/>
-                    <path d="M154 80C84 145 98 255 188 332L354 522L452 560L382 412C280 285 112 205 154 80Z" fill="#EA6B97"/>
-                  </svg>
-                  <div class="text-ahava-navy leading-none">
-                    <div class="text-[28px] tracking-wide font-normal">YAYASAN <span class="font-extrabold">AHAVA</span></div>
-                    <div class="text-[28px] tracking-wide font-extrabold mt-1">INDONESIA</div>
+                <!-- Top Brand Header -->
+                <div class="flex flex-col items-center text-center">
+                  <div class="flex items-center justify-center gap-3.5 mb-3">
+                    <svg viewBox="0 0 512 560" class="w-[58px] h-[64px] shrink-0" fill="none">
+                      <path d="M256 105C220 55 155 30 95 55C30 82 5 155 25 230C48 315 135 395 256 470C377 395 464 315 487 230C507 155 482 82 417 55C357 30 292 55 256 105Z" stroke="#1D8FE1" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="256" cy="196" r="42" fill="#F7B519"/>
+                      <path d="M352 80C382 135 362 215 274 286L318 332C408 255 422 145 352 80Z" fill="#6B1DC6"/>
+                      <path d="M193 386L56 560L172 515L255 432L193 386Z" fill="#6B1DC6"/>
+                      <path d="M154 80C84 145 98 255 188 332L354 522L452 560L382 412C280 285 112 205 154 80Z" fill="#EA6B97"/>
+                    </svg>
+                    <div class="text-ahava-navy leading-none text-left">
+                      <div class="text-[26px] tracking-wide font-normal">YAYASAN <span class="font-extrabold">AHAVA</span></div>
+                      <div class="text-[26px] tracking-wide font-extrabold mt-1">INDONESIA</div>
+                    </div>
                   </div>
                 </div>
 
-                <!-- Receipt Center Block -->
-                <div class="text-center my-auto flex flex-col items-center">
-                  <div class="inline-block px-6 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-ahava-navy text-[15px] font-extrabold tracking-[0.2em] uppercase mb-3">
-                    TANDA TERIMA
+                <!-- Center Certificate Content -->
+                <div class="my-auto text-center flex flex-col items-center">
+                  <div class="inline-flex items-center gap-2 px-5 py-1.5 rounded-full bg-ahava-navy text-amber-300 text-[13px] font-extrabold tracking-[0.24em] uppercase mb-3">
+                    <span>TANDA TERIMA RESMI</span>
                   </div>
 
-                  <div class="text-[24px] font-bold text-slate-700 tracking-wide uppercase mb-5">
-                    DONASI SEBANYAK
+                  <h2 class="font-display text-[36px] font-bold text-ahava-navy tracking-tight mb-2">
+                    Donasi Sebanyak
+                  </h2>
+
+                  <div class="flex items-center justify-center gap-2 mb-6">
+                    <span class="w-12 h-[2px] bg-ahava-amber"></span>
+                    <span class="w-2 h-2 rotate-45 bg-ahava-navy"></span>
+                    <span class="w-12 h-[2px] bg-ahava-amber"></span>
                   </div>
 
-                  <!-- Highlighted Donation Amount Card -->
-                  <div class="w-full max-w-[590px] rounded-[24px] bg-gradient-to-br from-[#FFFDF5] via-[#FFF8E1] to-[#FEF2CC] border-[3px] border-[#F7B519] shadow-[0_14px_32px_-8px_rgba(247,181,25,0.34)] px-8 py-7 mb-7 relative overflow-hidden">
-                    <div class="w-20 h-1.5 rounded-full bg-ahava-navy mx-auto mb-3.5"></div>
-
-                    <div id="prev-amount" class="text-[54px] font-black text-ahava-navy tracking-tight leading-none">
+                  <!-- Highlighted Navy & Gold Donation Box -->
+                  <div class="w-full rounded-[26px] bg-ahava-navy text-white border-[3px] border-ahava-amber shadow-[0_18px_38px_-10px_rgba(11,40,99,0.28)] px-8 py-8 mb-7">
+                    <div class="text-[12px] font-bold uppercase tracking-[0.24em] text-amber-300/90 mb-2">Nominal Donasi Diterima</div>
+                    <div id="prev-amount" class="text-[54px] font-black text-white tracking-tight leading-none">
                       Rp. 3.500.000;
                     </div>
-
-                    <div id="prev-amount-words" class="mt-3.5 text-[21px] italic font-bold text-slate-800">
+                    <div id="prev-amount-words" class="mt-3.5 text-[20px] italic font-medium text-amber-200">
                       (Tiga juta lima ratus ribu rupiah)
                     </div>
                   </div>
 
-                  <!-- Donor Name -->
-                  <div class="mb-6">
-                    <div class="text-[12px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-1">Diberikan Oleh</div>
-                    <div id="prev-donor-name" class="text-[31px] font-extrabold text-ahava-navy tracking-tight leading-snug">
+                  <!-- Donor Identity Block -->
+                  <div class="w-full py-4 px-6 rounded-2xl bg-white border border-amber-200/90 mb-6">
+                    <div class="text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-400 mb-1">Diberikan Dengan Penuh Kasih Oleh</div>
+                    <div id="prev-donor-name" class="font-display text-[32px] font-bold text-ahava-navy tracking-tight leading-snug">
                       GBI BCP Thamrin City
                     </div>
+                    <div id="prev-p2-month" class="text-[13px] font-bold text-amber-700 mt-1">Periode: November</div>
                   </div>
 
                   <!-- Gratitude Note -->
-                  <p id="prev-receipt-note" class="text-[18.5px] leading-[1.68] text-slate-800 max-w-[560px] mx-auto font-normal">
+                  <p id="prev-receipt-note" class="text-[18px] leading-[1.7] text-slate-700 max-w-[570px] mx-auto font-normal">
                     Terima kasih atas kebaikan yang telah Anda bagikan. Semoga Tuhan membalasnya dengan kelimpahan dan memberkati setiap bantuan yang Anda salurkan bagi masyarakat kurang mampu melalui Yayasan Ahava Indonesia.
                   </p>
                 </div>
 
-                <!-- Signature Right -->
-                <div class="flex justify-end pr-[48px] pb-1">
-                  <div class="text-right text-[18.5px] leading-snug text-slate-900">
-                    <div class="font-normal">Hormat kami,</div>
-                    <div class="font-bold mt-2 text-ahava-navy">Yayasan AHAVA</div>
-                    <div class="font-bold text-ahava-navy">Indonesia</div>
+                <!-- Bottom Signature Row -->
+                <div class="flex items-end justify-between pt-4 border-t border-slate-200/80">
+                  <div class="text-left">
+                    <div class="inline-flex items-center gap-2 text-ahava-navy font-bold text-[13px]">
+                      <i class="fa-solid fa-hand-holding-heart text-ahava-gold text-base"></i>
+                      <span>800 Porsi Makan Siang Setiap Hari</span>
+                    </div>
+                    <div class="text-[12px] text-slate-500 mt-0.5">Melayani Lansia & Masyarakat Prasejahtera</div>
+                  </div>
+
+                  <div class="text-right text-[17.5px] leading-snug text-slate-800">
+                    <div class="text-slate-500 text-[15px]">Hormat kami,</div>
+                    <div class="font-extrabold mt-1.5 text-ahava-navy text-[19px]">Yayasan AHAVA Indonesia</div>
                   </div>
                 </div>
 
@@ -797,93 +702,52 @@
           </div>
 
           <!-- ===================================================================== -->
-          <!-- PAGE 3 (A4: 794 x 1123 px): DOKUMENTASI 4 FOTO 9:16 (FOTO 1 - 4)      -->
+          <!-- PAGE 3 (A4): DOKUMENTASI 4 FOTO 9:16 (FOTO 1 - 4)                     -->
           <!-- ===================================================================== -->
           <div id="page-wrapper-3" class="page-wrapper flex flex-col items-center">
             <div class="no-print text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Halaman 3 — Dokumentasi Foto 1–4 (9:16 • A4)</div>
-            <div id="pdf-page-3" class="pdf-page pdf-diagonal-bg">
+            <div id="pdf-page-3" class="pdf-page editorial-paper">
 
-              <!-- Top-Right Geometric Ornament -->
-              <svg class="absolute top-0 right-0 w-[184px] h-[184px] pointer-events-none z-0" viewBox="0 0 240 240" fill="none">
-                <rect x="0" y="0" width="40" height="80" fill="#F7B519"/>
-                <polygon points="40,0 40,80 0,40" fill="#0B2863"/>
-                <rect x="40" y="0" width="40" height="80" fill="#F7B519"/>
-                <polygon points="80,0 80,80 40,40" fill="#0B2863"/>
-                <rect x="80" y="0" width="80" height="80" fill="#1668E3"/>
-                <path d="M80 0C102 0 120 18 120 40C98 40 80 22 80 0Z" fill="#85D5FF"/>
-                <path d="M160 0C160 22 142 40 120 40C120 18 138 0 160 0Z" fill="#85D5FF"/>
-                <path d="M80 80C80 58 98 40 120 40C120 62 102 80 80 80Z" fill="#85D5FF"/>
-                <path d="M160 80C138 80 120 62 120 40C142 40 160 58 160 80Z" fill="#85D5FF"/>
-                <path d="M200 0H240V80H200A40 40 0 0 1 200 0Z" fill="#1668E3"/>
-                <circle cx="204" cy="40" r="18" fill="#0B2863"/>
-                <rect x="80" y="80" width="80" height="80" fill="#F7B519"/>
-                <polygon points="120,80 160,120 120,160 80,120" fill="#FFFFFF"/>
-                <path d="M160 80A80 80 0 0 0 240 160H160V80Z" fill="#1668E3"/>
-                <path d="M182 80A58 58 0 0 0 240 138V116A36 36 0 0 1 204 80H182Z" fill="#FFFFFF"/>
-                <path d="M204 80A36 36 0 0 0 240 116V80H204Z" fill="#85D5FF"/>
-                <path d="M80 160C102 160 120 178 120 200C98 200 80 182 80 160Z" fill="#0B2863"/>
-                <path d="M160 160C160 182 142 200 120 200C120 178 138 160 160 160Z" fill="#0B2863"/>
-                <path d="M80 240C80 218 98 200 120 200C120 222 102 240 80 240Z" fill="#0B2863"/>
-                <path d="M160 240C138 240 120 222 120 200C142 200 160 218 160 240Z" fill="#0B2863"/>
-              </svg>
+              <!-- Top Navy & Gold Editorial Bar -->
+              <div class="absolute top-0 left-0 w-[794px] h-[12px] bg-ahava-navy pointer-events-none z-0"></div>
+              <div class="absolute top-[12px] left-0 w-[794px] h-[4px] bg-ahava-amber pointer-events-none z-0"></div>
 
-              <!-- Decorative Dots Top-Left -->
-              <div class="absolute top-[36px] left-[36px] grid grid-cols-3 gap-2.5 opacity-85 pointer-events-none">
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-              </div>
+              <!-- Bottom Navy & Gold Footer Bar -->
+              <div class="absolute top-[1107px] left-0 w-[794px] h-[4px] bg-ahava-amber pointer-events-none z-0"></div>
+              <div class="absolute top-[1111px] left-0 w-[794px] h-[12px] bg-ahava-navy pointer-events-none z-0"></div>
 
-              <!-- Decorative Dots Bottom-Right -->
-              <div class="absolute bottom-[36px] right-[36px] grid grid-cols-3 gap-2.5 opacity-85 pointer-events-none">
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-              </div>
+              <!-- CONTENT SAFE AREA -->
+              <div class="relative z-10 h-full flex flex-col px-[58px] pt-[46px] pb-[44px]">
+                <!-- Header Row -->
+                <div class="flex items-center justify-between pb-3.5 border-b border-slate-200/90 mb-4">
+                  <div class="flex items-center gap-3">
+                    <svg viewBox="0 0 512 560" class="w-[46px] h-[50px] shrink-0" fill="none">
+                      <path d="M256 105C220 55 155 30 95 55C30 82 5 155 25 230C48 315 135 395 256 470C377 395 464 315 487 230C507 155 482 82 417 55C357 30 292 55 256 105Z" stroke="#1D8FE1" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="256" cy="196" r="42" fill="#F7B519"/>
+                      <path d="M352 80C382 135 362 215 274 286L318 332C408 255 422 145 352 80Z" fill="#6B1DC6"/>
+                      <path d="M193 386L56 560L172 515L255 432L193 386Z" fill="#6B1DC6"/>
+                      <path d="M154 80C84 145 98 255 188 332L354 522L452 560L382 412C280 285 112 205 154 80Z" fill="#EA6B97"/>
+                    </svg>
+                    <div class="text-ahava-navy leading-none">
+                      <div class="text-[20px] tracking-wide font-normal">YAYASAN <span class="font-extrabold">AHAVA</span></div>
+                      <div class="text-[20px] tracking-wide font-extrabold mt-0.5">INDONESIA</div>
+                    </div>
+                  </div>
 
-              <!-- CONTENT SAFE AREA (A4: 794x1123) -->
-              <div class="relative z-10 h-full flex flex-col px-[64px] pt-[52px] pb-[52px]">
-                <!-- Header Left-Aligned -->
-                <div class="flex items-center gap-3.5 mb-2">
-                  <svg viewBox="0 0 512 560" class="w-[50px] h-[55px] shrink-0" fill="none">
-                    <path d="M256 105C220 55 155 30 95 55C30 82 5 155 25 230C48 315 135 395 256 470C377 395 464 315 487 230C507 155 482 82 417 55C357 30 292 55 256 105Z" stroke="#1D8FE1" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="256" cy="196" r="42" fill="#F7B519"/>
-                    <path d="M352 80C382 135 362 215 274 286L318 332C408 255 422 145 352 80Z" fill="#6B1DC6"/>
-                    <path d="M193 386L56 560L172 515L255 432L193 386Z" fill="#6B1DC6"/>
-                    <path d="M154 80C84 145 98 255 188 332L354 522L452 560L382 412C280 285 112 205 154 80Z" fill="#EA6B97"/>
-                  </svg>
-                  <div class="text-ahava-navy leading-none">
-                    <div class="text-[22px] tracking-wide font-normal">YAYASAN <span class="font-extrabold">AHAVA</span></div>
-                    <div class="text-[22px] tracking-wide font-extrabold mt-0.5">INDONESIA</div>
+                  <div class="text-right">
+                    <h2 class="font-display text-[32px] font-bold text-ahava-navy tracking-wide uppercase leading-none">
+                      DOKUMENTASI
+                    </h2>
                   </div>
                 </div>
 
-                <!-- Title -->
-                <div class="text-center mb-4">
-                  <h2 class="text-[38px] font-extrabold text-ahava-navy tracking-[0.06em] uppercase leading-none">
-                    DOKUMENTASI
-                  </h2>
-                </div>
-
-                <!-- Symmetrical 2x2 Grid of Exact 9:16 Portrait Frames (234 x 416 px) -->
+                <!-- Symmetrical 2x2 Grid of Exact 9:16 Portrait Frames (238 x 423 px) -->
                 <div class="flex-1 flex items-center justify-center">
-                  <div class="grid grid-cols-2 gap-x-[36px] gap-y-[22px]">
-                    <div id="prev-photo-box-0" class="photo-frame-9-16 w-[234px] h-[416px]"></div>
-                    <div id="prev-photo-box-1" class="photo-frame-9-16 w-[234px] h-[416px]"></div>
-                    <div id="prev-photo-box-2" class="photo-frame-9-16 w-[234px] h-[416px]"></div>
-                    <div id="prev-photo-box-3" class="photo-frame-9-16 w-[234px] h-[416px]"></div>
+                  <div class="grid grid-cols-2 gap-x-[40px] gap-y-[24px]">
+                    <div id="prev-photo-box-0" class="photo-frame-9-16 w-[238px] h-[423px]"></div>
+                    <div id="prev-photo-box-1" class="photo-frame-9-16 w-[238px] h-[423px]"></div>
+                    <div id="prev-photo-box-2" class="photo-frame-9-16 w-[238px] h-[423px]"></div>
+                    <div id="prev-photo-box-3" class="photo-frame-9-16 w-[238px] h-[423px]"></div>
                   </div>
                 </div>
               </div>
@@ -891,93 +755,52 @@
           </div>
 
           <!-- ===================================================================== -->
-          <!-- PAGE 4 (A4: 794 x 1123 px): DOKUMENTASI 4 FOTO 9:16 (FOTO 5 - 8)      -->
+          <!-- PAGE 4 (A4): DOKUMENTASI 4 FOTO 9:16 (FOTO 5 - 8)                     -->
           <!-- ===================================================================== -->
           <div id="page-wrapper-4" class="page-wrapper flex flex-col items-center">
             <div class="no-print text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Halaman 4 — Dokumentasi Foto 5–8 (9:16 • A4)</div>
-            <div id="pdf-page-4" class="pdf-page pdf-diagonal-bg">
+            <div id="pdf-page-4" class="pdf-page editorial-paper">
 
-              <!-- Top-Right Geometric Ornament -->
-              <svg class="absolute top-0 right-0 w-[184px] h-[184px] pointer-events-none z-0" viewBox="0 0 240 240" fill="none">
-                <rect x="0" y="0" width="40" height="80" fill="#F7B519"/>
-                <polygon points="40,0 40,80 0,40" fill="#0B2863"/>
-                <rect x="40" y="0" width="40" height="80" fill="#F7B519"/>
-                <polygon points="80,0 80,80 40,40" fill="#0B2863"/>
-                <rect x="80" y="0" width="80" height="80" fill="#1668E3"/>
-                <path d="M80 0C102 0 120 18 120 40C98 40 80 22 80 0Z" fill="#85D5FF"/>
-                <path d="M160 0C160 22 142 40 120 40C120 18 138 0 160 0Z" fill="#85D5FF"/>
-                <path d="M80 80C80 58 98 40 120 40C120 62 102 80 80 80Z" fill="#85D5FF"/>
-                <path d="M160 80C138 80 120 62 120 40C142 40 160 58 160 80Z" fill="#85D5FF"/>
-                <path d="M200 0H240V80H200A40 40 0 0 1 200 0Z" fill="#1668E3"/>
-                <circle cx="204" cy="40" r="18" fill="#0B2863"/>
-                <rect x="80" y="80" width="80" height="80" fill="#F7B519"/>
-                <polygon points="120,80 160,120 120,160 80,120" fill="#FFFFFF"/>
-                <path d="M160 80A80 80 0 0 0 240 160H160V80Z" fill="#1668E3"/>
-                <path d="M182 80A58 58 0 0 0 240 138V116A36 36 0 0 1 204 80H182Z" fill="#FFFFFF"/>
-                <path d="M204 80A36 36 0 0 0 240 116V80H204Z" fill="#85D5FF"/>
-                <path d="M80 160C102 160 120 178 120 200C98 200 80 182 80 160Z" fill="#0B2863"/>
-                <path d="M160 160C160 182 142 200 120 200C120 178 138 160 160 160Z" fill="#0B2863"/>
-                <path d="M80 240C80 218 98 200 120 200C120 222 102 240 80 240Z" fill="#0B2863"/>
-                <path d="M160 240C138 240 120 222 120 200C142 200 160 218 160 240Z" fill="#0B2863"/>
-              </svg>
+              <!-- Top Navy & Gold Editorial Bar -->
+              <div class="absolute top-0 left-0 w-[794px] h-[12px] bg-ahava-navy pointer-events-none z-0"></div>
+              <div class="absolute top-[12px] left-0 w-[794px] h-[4px] bg-ahava-amber pointer-events-none z-0"></div>
 
-              <!-- Decorative Dots Top-Left -->
-              <div class="absolute top-[36px] left-[36px] grid grid-cols-3 gap-2.5 opacity-85 pointer-events-none">
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-              </div>
+              <!-- Bottom Navy & Gold Footer Bar -->
+              <div class="absolute top-[1107px] left-0 w-[794px] h-[4px] bg-ahava-amber pointer-events-none z-0"></div>
+              <div class="absolute top-[1111px] left-0 w-[794px] h-[12px] bg-ahava-navy pointer-events-none z-0"></div>
 
-              <!-- Decorative Dots Bottom-Right -->
-              <div class="absolute bottom-[36px] right-[36px] grid grid-cols-3 gap-2.5 opacity-85 pointer-events-none">
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-              </div>
+              <!-- CONTENT SAFE AREA -->
+              <div class="relative z-10 h-full flex flex-col px-[58px] pt-[46px] pb-[44px]">
+                <!-- Header Row -->
+                <div class="flex items-center justify-between pb-3.5 border-b border-slate-200/90 mb-4">
+                  <div class="flex items-center gap-3">
+                    <svg viewBox="0 0 512 560" class="w-[46px] h-[50px] shrink-0" fill="none">
+                      <path d="M256 105C220 55 155 30 95 55C30 82 5 155 25 230C48 315 135 395 256 470C377 395 464 315 487 230C507 155 482 82 417 55C357 30 292 55 256 105Z" stroke="#1D8FE1" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="256" cy="196" r="42" fill="#F7B519"/>
+                      <path d="M352 80C382 135 362 215 274 286L318 332C408 255 422 145 352 80Z" fill="#6B1DC6"/>
+                      <path d="M193 386L56 560L172 515L255 432L193 386Z" fill="#6B1DC6"/>
+                      <path d="M154 80C84 145 98 255 188 332L354 522L452 560L382 412C280 285 112 205 154 80Z" fill="#EA6B97"/>
+                    </svg>
+                    <div class="text-ahava-navy leading-none">
+                      <div class="text-[20px] tracking-wide font-normal">YAYASAN <span class="font-extrabold">AHAVA</span></div>
+                      <div class="text-[20px] tracking-wide font-extrabold mt-0.5">INDONESIA</div>
+                    </div>
+                  </div>
 
-              <!-- CONTENT SAFE AREA (A4: 794x1123) -->
-              <div class="relative z-10 h-full flex flex-col px-[64px] pt-[52px] pb-[52px]">
-                <!-- Header Left-Aligned -->
-                <div class="flex items-center gap-3.5 mb-2">
-                  <svg viewBox="0 0 512 560" class="w-[50px] h-[55px] shrink-0" fill="none">
-                    <path d="M256 105C220 55 155 30 95 55C30 82 5 155 25 230C48 315 135 395 256 470C377 395 464 315 487 230C507 155 482 82 417 55C357 30 292 55 256 105Z" stroke="#1D8FE1" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="256" cy="196" r="42" fill="#F7B519"/>
-                    <path d="M352 80C382 135 362 215 274 286L318 332C408 255 422 145 352 80Z" fill="#6B1DC6"/>
-                    <path d="M193 386L56 560L172 515L255 432L193 386Z" fill="#6B1DC6"/>
-                    <path d="M154 80C84 145 98 255 188 332L354 522L452 560L382 412C280 285 112 205 154 80Z" fill="#EA6B97"/>
-                  </svg>
-                  <div class="text-ahava-navy leading-none">
-                    <div class="text-[22px] tracking-wide font-normal">YAYASAN <span class="font-extrabold">AHAVA</span></div>
-                    <div class="text-[22px] tracking-wide font-extrabold mt-0.5">INDONESIA</div>
+                  <div class="text-right">
+                    <h2 class="font-display text-[32px] font-bold text-ahava-navy tracking-wide uppercase leading-none">
+                      DOKUMENTASI
+                    </h2>
                   </div>
                 </div>
 
-                <!-- Title -->
-                <div class="text-center mb-4">
-                  <h2 class="text-[38px] font-extrabold text-ahava-navy tracking-[0.06em] uppercase leading-none">
-                    DOKUMENTASI
-                  </h2>
-                </div>
-
-                <!-- Symmetrical 2x2 Grid of Exact 9:16 Portrait Frames (234 x 416 px) -->
+                <!-- Symmetrical 2x2 Grid of Exact 9:16 Portrait Frames (238 x 423 px) -->
                 <div class="flex-1 flex items-center justify-center">
-                  <div class="grid grid-cols-2 gap-x-[36px] gap-y-[22px]">
-                    <div id="prev-photo-box-4" class="photo-frame-9-16 w-[234px] h-[416px]"></div>
-                    <div id="prev-photo-box-5" class="photo-frame-9-16 w-[234px] h-[416px]"></div>
-                    <div id="prev-photo-box-6" class="photo-frame-9-16 w-[234px] h-[416px]"></div>
-                    <div id="prev-photo-box-7" class="photo-frame-9-16 w-[234px] h-[416px]"></div>
+                  <div class="grid grid-cols-2 gap-x-[40px] gap-y-[24px]">
+                    <div id="prev-photo-box-4" class="photo-frame-9-16 w-[238px] h-[423px]"></div>
+                    <div id="prev-photo-box-5" class="photo-frame-9-16 w-[238px] h-[423px]"></div>
+                    <div id="prev-photo-box-6" class="photo-frame-9-16 w-[238px] h-[423px]"></div>
+                    <div id="prev-photo-box-7" class="photo-frame-9-16 w-[238px] h-[423px]"></div>
                   </div>
                 </div>
               </div>
@@ -985,93 +808,52 @@
           </div>
 
           <!-- ===================================================================== -->
-          <!-- PAGE 5 (A4: 794 x 1123 px): DOKUMENTASI 4 FOTO 9:16 (FOTO 9 - 12)     -->
+          <!-- PAGE 5 (A4): DOKUMENTASI 4 FOTO 9:16 (FOTO 9 - 12)                    -->
           <!-- ===================================================================== -->
           <div id="page-wrapper-5" class="page-wrapper flex flex-col items-center">
             <div class="no-print text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Halaman 5 — Dokumentasi Foto 9–12 (9:16 • A4)</div>
-            <div id="pdf-page-5" class="pdf-page pdf-diagonal-bg">
+            <div id="pdf-page-5" class="pdf-page editorial-paper">
 
-              <!-- Top-Right Geometric Ornament -->
-              <svg class="absolute top-0 right-0 w-[184px] h-[184px] pointer-events-none z-0" viewBox="0 0 240 240" fill="none">
-                <rect x="0" y="0" width="40" height="80" fill="#F7B519"/>
-                <polygon points="40,0 40,80 0,40" fill="#0B2863"/>
-                <rect x="40" y="0" width="40" height="80" fill="#F7B519"/>
-                <polygon points="80,0 80,80 40,40" fill="#0B2863"/>
-                <rect x="80" y="0" width="80" height="80" fill="#1668E3"/>
-                <path d="M80 0C102 0 120 18 120 40C98 40 80 22 80 0Z" fill="#85D5FF"/>
-                <path d="M160 0C160 22 142 40 120 40C120 18 138 0 160 0Z" fill="#85D5FF"/>
-                <path d="M80 80C80 58 98 40 120 40C120 62 102 80 80 80Z" fill="#85D5FF"/>
-                <path d="M160 80C138 80 120 62 120 40C142 40 160 58 160 80Z" fill="#85D5FF"/>
-                <path d="M200 0H240V80H200A40 40 0 0 1 200 0Z" fill="#1668E3"/>
-                <circle cx="204" cy="40" r="18" fill="#0B2863"/>
-                <rect x="80" y="80" width="80" height="80" fill="#F7B519"/>
-                <polygon points="120,80 160,120 120,160 80,120" fill="#FFFFFF"/>
-                <path d="M160 80A80 80 0 0 0 240 160H160V80Z" fill="#1668E3"/>
-                <path d="M182 80A58 58 0 0 0 240 138V116A36 36 0 0 1 204 80H182Z" fill="#FFFFFF"/>
-                <path d="M204 80A36 36 0 0 0 240 116V80H204Z" fill="#85D5FF"/>
-                <path d="M80 160C102 160 120 178 120 200C98 200 80 182 80 160Z" fill="#0B2863"/>
-                <path d="M160 160C160 182 142 200 120 200C120 178 138 160 160 160Z" fill="#0B2863"/>
-                <path d="M80 240C80 218 98 200 120 200C120 222 102 240 80 240Z" fill="#0B2863"/>
-                <path d="M160 240C138 240 120 222 120 200C142 200 160 218 160 240Z" fill="#0B2863"/>
-              </svg>
+              <!-- Top Navy & Gold Editorial Bar -->
+              <div class="absolute top-0 left-0 w-[794px] h-[12px] bg-ahava-navy pointer-events-none z-0"></div>
+              <div class="absolute top-[12px] left-0 w-[794px] h-[4px] bg-ahava-amber pointer-events-none z-0"></div>
 
-              <!-- Decorative Dots Top-Left -->
-              <div class="absolute top-[36px] left-[36px] grid grid-cols-3 gap-2.5 opacity-85 pointer-events-none">
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-              </div>
+              <!-- Bottom Navy & Gold Footer Bar -->
+              <div class="absolute top-[1107px] left-0 w-[794px] h-[4px] bg-ahava-amber pointer-events-none z-0"></div>
+              <div class="absolute top-[1111px] left-0 w-[794px] h-[12px] bg-ahava-navy pointer-events-none z-0"></div>
 
-              <!-- Decorative Dots Bottom-Right -->
-              <div class="absolute bottom-[36px] right-[36px] grid grid-cols-3 gap-2.5 opacity-85 pointer-events-none">
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-                <span class="w-2 h-2 rounded-full bg-ahava-navy"></span>
-              </div>
+              <!-- CONTENT SAFE AREA -->
+              <div class="relative z-10 h-full flex flex-col px-[58px] pt-[46px] pb-[44px]">
+                <!-- Header Row -->
+                <div class="flex items-center justify-between pb-3.5 border-b border-slate-200/90 mb-4">
+                  <div class="flex items-center gap-3">
+                    <svg viewBox="0 0 512 560" class="w-[46px] h-[50px] shrink-0" fill="none">
+                      <path d="M256 105C220 55 155 30 95 55C30 82 5 155 25 230C48 315 135 395 256 470C377 395 464 315 487 230C507 155 482 82 417 55C357 30 292 55 256 105Z" stroke="#1D8FE1" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="256" cy="196" r="42" fill="#F7B519"/>
+                      <path d="M352 80C382 135 362 215 274 286L318 332C408 255 422 145 352 80Z" fill="#6B1DC6"/>
+                      <path d="M193 386L56 560L172 515L255 432L193 386Z" fill="#6B1DC6"/>
+                      <path d="M154 80C84 145 98 255 188 332L354 522L452 560L382 412C280 285 112 205 154 80Z" fill="#EA6B97"/>
+                    </svg>
+                    <div class="text-ahava-navy leading-none">
+                      <div class="text-[20px] tracking-wide font-normal">YAYASAN <span class="font-extrabold">AHAVA</span></div>
+                      <div class="text-[20px] tracking-wide font-extrabold mt-0.5">INDONESIA</div>
+                    </div>
+                  </div>
 
-              <!-- CONTENT SAFE AREA (A4: 794x1123) -->
-              <div class="relative z-10 h-full flex flex-col px-[64px] pt-[52px] pb-[52px]">
-                <!-- Header Left-Aligned -->
-                <div class="flex items-center gap-3.5 mb-2">
-                  <svg viewBox="0 0 512 560" class="w-[50px] h-[55px] shrink-0" fill="none">
-                    <path d="M256 105C220 55 155 30 95 55C30 82 5 155 25 230C48 315 135 395 256 470C377 395 464 315 487 230C507 155 482 82 417 55C357 30 292 55 256 105Z" stroke="#1D8FE1" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="256" cy="196" r="42" fill="#F7B519"/>
-                    <path d="M352 80C382 135 362 215 274 286L318 332C408 255 422 145 352 80Z" fill="#6B1DC6"/>
-                    <path d="M193 386L56 560L172 515L255 432L193 386Z" fill="#6B1DC6"/>
-                    <path d="M154 80C84 145 98 255 188 332L354 522L452 560L382 412C280 285 112 205 154 80Z" fill="#EA6B97"/>
-                  </svg>
-                  <div class="text-ahava-navy leading-none">
-                    <div class="text-[22px] tracking-wide font-normal">YAYASAN <span class="font-extrabold">AHAVA</span></div>
-                    <div class="text-[22px] tracking-wide font-extrabold mt-0.5">INDONESIA</div>
+                  <div class="text-right">
+                    <h2 class="font-display text-[32px] font-bold text-ahava-navy tracking-wide uppercase leading-none">
+                      DOKUMENTASI
+                    </h2>
                   </div>
                 </div>
 
-                <!-- Title -->
-                <div class="text-center mb-4">
-                  <h2 class="text-[38px] font-extrabold text-ahava-navy tracking-[0.06em] uppercase leading-none">
-                    DOKUMENTASI
-                  </h2>
-                </div>
-
-                <!-- Symmetrical 2x2 Grid of Exact 9:16 Portrait Frames (234 x 416 px) -->
+                <!-- Symmetrical 2x2 Grid of Exact 9:16 Portrait Frames (238 x 423 px) -->
                 <div class="flex-1 flex items-center justify-center">
-                  <div class="grid grid-cols-2 gap-x-[36px] gap-y-[22px]">
-                    <div id="prev-photo-box-8" class="photo-frame-9-16 w-[234px] h-[416px]"></div>
-                    <div id="prev-photo-box-9" class="photo-frame-9-16 w-[234px] h-[416px]"></div>
-                    <div id="prev-photo-box-10" class="photo-frame-9-16 w-[234px] h-[416px]"></div>
-                    <div id="prev-photo-box-11" class="photo-frame-9-16 w-[234px] h-[416px]"></div>
+                  <div class="grid grid-cols-2 gap-x-[40px] gap-y-[24px]">
+                    <div id="prev-photo-box-8" class="photo-frame-9-16 w-[238px] h-[423px]"></div>
+                    <div id="prev-photo-box-9" class="photo-frame-9-16 w-[238px] h-[423px]"></div>
+                    <div id="prev-photo-box-10" class="photo-frame-9-16 w-[238px] h-[423px]"></div>
+                    <div id="prev-photo-box-11" class="photo-frame-9-16 w-[238px] h-[423px]"></div>
                   </div>
                 </div>
               </div>
@@ -1079,90 +861,33 @@
           </div>
 
           <!-- ===================================================================== -->
-          <!-- PAGE 6 (A4: 794 x 1123 px): KARTU PENUTUP TERIMA KASIH                -->
+          <!-- PAGE 6 (A4): KARTU PENUTUP TERIMA KASIH (ROYAL NAVY & GOLD EDITION)   -->
           <!-- ===================================================================== -->
           <div id="page-wrapper-6" class="page-wrapper flex flex-col items-center">
             <div class="no-print text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Halaman 6 — Penutup Terima Kasih (A4)</div>
-            <div id="pdf-page-6" class="pdf-page pdf-diagonal-bg">
+            <div id="pdf-page-6" class="pdf-page" style="background: linear-gradient(160deg, #0B2863 0%, #10357E 55%, #081E4C 100%);">
 
-              <!-- Top-Left Geometric Ornament -->
-              <svg class="absolute top-0 left-0 w-[124px] h-[124px] pointer-events-none z-0" viewBox="0 0 160 160" fill="none">
-                <path d="M0 80A80 80 0 0 1 80 0V80H0Z" fill="#1CC6E8"/>
-                <path d="M34 80A46 46 0 0 1 80 34V80H34Z" fill="#F7B519"/>
-                <path d="M80 0H160A80 80 0 0 1 80 80V0Z" fill="#1668E3"/>
-                <rect x="0" y="80" width="80" height="80" fill="#0B2863"/>
-                <rect x="24" y="104" width="32" height="32" fill="#1CC6E8"/>
-                <circle cx="120" cy="120" r="40" fill="#1CC6E8"/>
-                <circle cx="120" cy="120" r="19" fill="#0B2863"/>
+              <!-- Decorative Gold Double Border -->
+              <div class="absolute top-[30px] left-[30px] w-[734px] h-[1063px] rounded-[28px] border-[2px] border-ahava-amber/70 pointer-events-none z-0"></div>
+              <div class="absolute top-[40px] left-[40px] w-[714px] h-[1043px] rounded-[22px] border border-white/15 pointer-events-none z-0"></div>
+
+              <!-- Subtle Glow Circles -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" class="absolute top-0 left-[474px] w-[320px] h-[320px] pointer-events-none z-0" viewBox="0 0 320 320" fill="none">
+                <circle cx="320" cy="0" r="240" fill="#1CC6E8" fill-opacity="0.08"/>
+                <circle cx="320" cy="0" r="150" fill="#F7B519" fill-opacity="0.09"/>
               </svg>
 
-              <!-- Top-Right Geometric Ornament -->
-              <svg class="absolute top-0 right-0 w-[184px] h-[184px] pointer-events-none z-0" viewBox="0 0 240 240" fill="none">
-                <rect x="0" y="0" width="40" height="80" fill="#F7B519"/>
-                <polygon points="40,0 40,80 0,40" fill="#0B2863"/>
-                <rect x="40" y="0" width="40" height="80" fill="#F7B519"/>
-                <polygon points="80,0 80,80 40,40" fill="#0B2863"/>
-                <rect x="80" y="0" width="80" height="80" fill="#1668E3"/>
-                <path d="M80 0C102 0 120 18 120 40C98 40 80 22 80 0Z" fill="#85D5FF"/>
-                <path d="M160 0C160 22 142 40 120 40C120 18 138 0 160 0Z" fill="#85D5FF"/>
-                <path d="M80 80C80 58 98 40 120 40C120 62 102 80 80 80Z" fill="#85D5FF"/>
-                <path d="M160 80C138 80 120 62 120 40C142 40 160 58 160 80Z" fill="#85D5FF"/>
-                <path d="M200 0H240V80H200A40 40 0 0 1 200 0Z" fill="#1668E3"/>
-                <circle cx="204" cy="40" r="18" fill="#0B2863"/>
-                <rect x="80" y="80" width="80" height="80" fill="#F7B519"/>
-                <polygon points="120,80 160,120 120,160 80,120" fill="#FFFFFF"/>
-                <path d="M160 80A80 80 0 0 0 240 160H160V80Z" fill="#1668E3"/>
-                <path d="M182 80A58 58 0 0 0 240 138V116A36 36 0 0 1 204 80H182Z" fill="#FFFFFF"/>
-                <path d="M204 80A36 36 0 0 0 240 116V80H204Z" fill="#85D5FF"/>
-                <path d="M80 160C102 160 120 178 120 200C98 200 80 182 80 160Z" fill="#0B2863"/>
-                <path d="M160 160C160 182 142 200 120 200C120 178 138 160 160 160Z" fill="#0B2863"/>
-                <path d="M80 240C80 218 98 200 120 200C120 222 102 240 80 240Z" fill="#0B2863"/>
-                <path d="M160 240C138 240 120 222 120 200C142 200 160 218 160 240Z" fill="#0B2863"/>
+              <svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" class="absolute top-[803px] left-0 w-[320px] h-[320px] pointer-events-none z-0" viewBox="0 0 320 320" fill="none">
+                <circle cx="0" cy="320" r="240" fill="#1668E3" fill-opacity="0.14"/>
+                <circle cx="0" cy="320" r="140" fill="#F7B519" fill-opacity="0.08"/>
               </svg>
 
-              <!-- Bottom-Left Geometric Ornament -->
-              <svg class="absolute bottom-0 left-0 w-[184px] h-[184px] pointer-events-none z-0" viewBox="0 0 240 240" fill="none">
-                <path d="M80 0C102 0 120 18 120 40C98 40 80 22 80 0Z" fill="#0B2863"/>
-                <path d="M160 0C160 22 142 40 120 40C120 18 138 0 160 0Z" fill="#0B2863"/>
-                <path d="M80 80C80 58 98 40 120 40C120 62 102 80 80 80Z" fill="#0B2863"/>
-                <path d="M160 80C138 80 120 62 120 40C142 40 160 58 160 80Z" fill="#0B2863"/>
-                <path d="M0 80A80 80 0 0 1 80 160H0V80Z" fill="#1668E3"/>
-                <path d="M0 102A58 58 0 0 1 58 160H36A36 36 0 0 0 0 124V102Z" fill="#FFFFFF"/>
-                <path d="M0 124A36 36 0 0 1 36 160H0V124Z" fill="#85D5FF"/>
-                <rect x="80" y="80" width="80" height="80" fill="#F7B519"/>
-                <polygon points="120,80 160,120 120,160 80,120" fill="#FFFFFF"/>
-                <circle cx="200" cy="120" r="40" fill="#FFFFFF"/>
-                <circle cx="200" cy="120" r="19" fill="#85D5FF"/>
-                <path d="M0 160H40A40 40 0 0 1 40 240H0V160Z" fill="#1668E3"/>
-                <circle cx="36" cy="200" r="18" fill="#0B2863"/>
-                <rect x="80" y="160" width="80" height="80" fill="#1668E3"/>
-                <path d="M80 160C102 160 120 178 120 200C98 200 80 182 80 160Z" fill="#85D5FF"/>
-                <path d="M160 160C160 182 142 200 120 200C120 178 138 160 160 160Z" fill="#85D5FF"/>
-                <path d="M80 240C80 218 98 200 120 200C120 222 102 240 80 240Z" fill="#85D5FF"/>
-                <path d="M160 240C138 240 120 222 120 200C142 200 160 218 160 240Z" fill="#85D5FF"/>
-                <rect x="160" y="160" width="40" height="80" fill="#F7B519"/>
-                <polygon points="160,160 160,240 200,200" fill="#0B2863"/>
-                <rect x="200" y="160" width="40" height="80" fill="#F7B519"/>
-                <polygon points="200,160 200,240 240,200" fill="#0B2863"/>
-              </svg>
+              <!-- CONTENT SAFE AREA -->
+              <div class="relative z-10 h-full flex flex-col justify-between items-center text-center px-[84px] pt-[92px] pb-[86px]">
 
-              <!-- Bottom-Right Geometric Ornament -->
-              <svg class="absolute bottom-0 right-0 w-[124px] h-[124px] pointer-events-none z-0" viewBox="0 0 160 160" fill="none">
-                <circle cx="40" cy="40" r="40" fill="#1CC6E8"/>
-                <circle cx="40" cy="40" r="19" fill="#0B2863"/>
-                <rect x="80" y="0" width="80" height="80" fill="#0B2863"/>
-                <rect x="104" y="24" width="32" height="32" fill="#1CC6E8"/>
-                <path d="M0 160A80 80 0 0 1 80 80V160H0Z" fill="#1668E3"/>
-                <path d="M80 80H160A80 80 0 0 1 80 160V80Z" fill="#1CC6E8"/>
-                <path d="M80 80H126A46 46 0 0 1 80 126V80Z" fill="#F7B519"/>
-              </svg>
-
-              <!-- CONTENT SAFE AREA (A4: 794x1123) -->
-              <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-[84px] pt-[124px] pb-[182px]">
-
-                <!-- Brand Header -->
-                <div class="flex items-center justify-center gap-4 mb-10">
-                  <svg viewBox="0 0 512 560" class="w-[62px] h-[68px] shrink-0" fill="none">
+                <!-- Brand Header in White Card Badge -->
+                <div class="inline-flex items-center gap-4 px-7 py-4 rounded-2xl bg-white shadow-xl">
+                  <svg viewBox="0 0 512 560" class="w-[54px] h-[60px] shrink-0" fill="none">
                     <path d="M256 105C220 55 155 30 95 55C30 82 5 155 25 230C48 315 135 395 256 470C377 395 464 315 487 230C507 155 482 82 417 55C357 30 292 55 256 105Z" stroke="#1D8FE1" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
                     <circle cx="256" cy="196" r="42" fill="#F7B519"/>
                     <path d="M352 80C382 135 362 215 274 286L318 332C408 255 422 145 352 80Z" fill="#6B1DC6"/>
@@ -1170,27 +895,43 @@
                     <path d="M154 80C84 145 98 255 188 332L354 522L452 560L382 412C280 285 112 205 154 80Z" fill="#EA6B97"/>
                   </svg>
                   <div class="text-ahava-navy leading-none text-left">
-                    <div class="text-[28px] tracking-wide font-normal">YAYASAN <span class="font-extrabold">AHAVA</span></div>
-                    <div class="text-[28px] tracking-wide font-extrabold mt-1">INDONESIA</div>
+                    <div class="text-[24px] tracking-wide font-normal">YAYASAN <span class="font-extrabold">AHAVA</span></div>
+                    <div class="text-[24px] tracking-wide font-extrabold mt-1">INDONESIA</div>
                   </div>
                 </div>
 
-                <!-- Huge Thank You Headline -->
-                <h2 id="prev-closing-title" class="text-[52px] font-black text-ahava-navy tracking-[0.04em] uppercase mb-5 leading-tight">
-                  TERIMA KASIH
-                </h2>
+                <!-- Center Message -->
+                <div class="my-auto flex flex-col items-center">
+                  <div class="text-[13px] font-extrabold uppercase tracking-[0.3em] text-amber-300 mb-3">
+                    SALAM KASIH & PENGHARGAAN
+                  </div>
 
-                <!-- Decorative Accent Divider -->
-                <div class="flex items-center justify-center gap-2 mb-7">
-                  <span class="w-14 h-2 rounded-full bg-ahava-gold"></span>
-                  <span class="w-4 h-2 rounded-full bg-ahava-cyan"></span>
-                  <span class="w-4 h-2 rounded-full bg-ahava-blue"></span>
+                  <h2 id="prev-closing-title" class="font-display text-[56px] font-bold text-white tracking-[0.04em] uppercase mb-5 leading-tight">
+                    TERIMA KASIH
+                  </h2>
+
+                  <div class="flex items-center justify-center gap-2.5 mb-8">
+                    <span class="w-16 h-[2px] bg-ahava-amber"></span>
+                    <span class="w-2.5 h-2.5 rotate-45 bg-ahava-cyan"></span>
+                    <span class="w-16 h-[2px] bg-ahava-amber"></span>
+                  </div>
+
+                  <p id="prev-closing-message" class="text-[21px] leading-[1.76] text-blue-50/95 max-w-[590px] font-normal">
+                    Kami sampaikan kepada Anda atas dukungan yang telah diberikan dalam kegiatan berbagi makan siang Yayasan Ahava Indonesia. Partisipasi Anda menjadi bagian penting dalam menghadirkan kepedulian dan harapan bagi para lansia serta masyarakat yang membutuhkan. Semoga setiap kebaikan yang Anda taburkan senantiasa dibalas Tuhan Yang Maha Esa dengan berkat yang berlipat ganda.
+                  </p>
                 </div>
 
-                <!-- Closing Gratitude Message -->
-                <p id="prev-closing-message" class="text-[21px] leading-[1.72] text-slate-800 max-w-[590px] font-normal">
-                  Kami sampaikan kepada Anda atas dukungan yang telah diberikan dalam kegiatan berbagi makan siang Yayasan Ahava Indonesia. Partisipasi Anda menjadi bagian penting dalam menghadirkan kepedulian dan harapan bagi para lansia serta masyarakat yang membutuhkan. Semoga setiap kebaikan yang Anda taburkan senantiasa dibalas Tuhan Yang Maha Esa dengan berkat yang berlipat ganda.
-                </p>
+                <!-- Footer Motto & Instagram -->
+                <div class="pt-5 border-t border-white/15 w-full flex items-center justify-between text-left">
+                  <div>
+                    <div class="text-[13px] font-bold text-amber-300">Yayasan Ahava Indonesia</div>
+                    <div class="text-[12px] text-blue-200/80">Berbagi Kasih • Melayani Sesama</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-[11px] uppercase tracking-widest text-blue-200/70">Instagram</div>
+                    <div id="prev-p6-ig" class="text-[14px] font-extrabold text-white">@ahavaindonesia</div>
+                  </div>
+                </div>
 
               </div>
             </div>
@@ -1247,7 +988,7 @@
 
   <!-- ==================== APPLICATION LOGIC ==================== -->
   <script>
-    const STORAGE_KEY = 'ahava_indonesia_pdf_generator_v8_a4_mobile';
+    const STORAGE_KEY = 'ahava_indonesia_pdf_generator_v9_editorial_a4';
 
     // Exact ISO A4 Portrait Pixel Dimensions at 96 DPI (210mm x 297mm)
     const A4_WIDTH_PX = 794;
@@ -1351,6 +1092,7 @@
 
     function handleMonthTextChange(val) {
       appState.monthLabel = val;
+      renderPreview();
       saveDraftToStorage(false);
     }
 
@@ -1412,13 +1154,17 @@
     }
 
     function renderPreview() {
+      const displayMonth = (appState.monthLabel || appState.activeMonthKey || 'November').trim();
+      const displayIg = appState.igHandle || '@ahavaindonesia';
+
       // Page 1
+      document.getElementById('prev-p1-month').textContent = displayMonth;
       document.getElementById('prev-salutation').textContent = appState.salutation || 'Dear Sahabat Ahava';
       document.getElementById('prev-p1').textContent = appState.p1;
       document.getElementById('prev-p2').textContent = appState.p2;
       document.getElementById('prev-p3').textContent = appState.p3;
       document.getElementById('prev-p4').textContent = appState.p4;
-      document.getElementById('prev-ig-handle').textContent = appState.igHandle || '@ahavaindonesia';
+      document.getElementById('prev-ig-handle').textContent = displayIg;
 
       // Page 2
       const cleanAmt = (appState.amount || '0').trim();
@@ -1434,6 +1180,7 @@
 
       document.getElementById('prev-amount-words').textContent = appState.amountWords;
       document.getElementById('prev-donor-name').textContent = appState.donorName || 'Nama Donatur';
+      document.getElementById('prev-p2-month').textContent = `Periode: ${displayMonth}`;
       document.getElementById('prev-receipt-note').textContent = appState.receiptNote;
 
       // Pages 3, 4, 5 (12 Strict 9:16 Portrait Photo Slots: 4 per page)
@@ -1454,7 +1201,7 @@
           boxEl.classList.add('is-empty');
           boxEl.innerHTML = `
             <div class="w-full h-full flex flex-col items-center justify-center p-4 text-center">
-              <div class="w-12 h-12 rounded-2xl bg-white border border-slate-200 shadow-2xs flex items-center justify-center text-ahava-navy font-extrabold text-[17px] mb-2.5">
+              <div class="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200/80 flex items-center justify-center text-ahava-navy font-extrabold text-[17px] mb-2.5">
                 ${i + 1}
               </div>
               <div class="text-[14px] font-extrabold text-ahava-navy leading-snug mb-1">${meta.title}</div>
@@ -1467,6 +1214,7 @@
       // Page 6
       document.getElementById('prev-closing-title').textContent = appState.closingTitle || 'TERIMA KASIH';
       document.getElementById('prev-closing-message').textContent = appState.closingMessage;
+      document.getElementById('prev-p6-ig').textContent = displayIg;
 
       requestAnimationFrame(() => updateScaledContainerHeight());
     }
@@ -1523,9 +1271,9 @@
 
           if (hasPhoto) {
             html += `
-              <div class="relative aspect-[9/16] rounded-xl overflow-hidden border border-blue-200 bg-slate-900 group shadow-2xs">
+              <div class="relative aspect-[9/16] rounded-xl overflow-hidden border border-amber-200 bg-slate-900 group shadow-2xs">
                 <img src="${activePhotos[idx]}" alt="Foto ${idx + 1}" class="w-full h-full object-contain" />
-                <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-ahava-navy/90 text-white text-[10px] font-extrabold">
+                <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-ahava-navy/90 text-amber-300 text-[10px] font-extrabold">
                   #${idx + 1}
                 </span>
                 <div class="absolute inset-x-0 bottom-0 sm:inset-0 bg-slate-900/75 sm:bg-slate-900/65 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition flex flex-row sm:flex-col items-center justify-center gap-1.5 p-1.5">
@@ -1541,11 +1289,11 @@
             `;
           } else {
             html += `
-              <label class="aspect-[9/16] rounded-xl border-2 border-dashed border-slate-300 hover:border-ahava-blue bg-slate-50 hover:bg-blue-50/50 transition cursor-pointer flex flex-col items-center justify-center p-2 text-center group" title="${meta.title} - ${meta.subtitle}">
-                <span class="w-6 h-6 rounded-full bg-white border border-slate-200 group-hover:border-ahava-blue text-[10px] font-extrabold text-ahava-navy flex items-center justify-center mb-1.5">
+              <label class="aspect-[9/16] rounded-xl border-2 border-dashed border-slate-300 hover:border-ahava-amber bg-slate-50 hover:bg-amber-50/40 transition cursor-pointer flex flex-col items-center justify-center p-2 text-center group" title="${meta.title} - ${meta.subtitle}">
+                <span class="w-6 h-6 rounded-full bg-white border border-slate-200 group-hover:border-ahava-amber text-[10px] font-extrabold text-ahava-navy flex items-center justify-center mb-1.5">
                   ${idx + 1}
                 </span>
-                <i class="fa-solid fa-plus text-slate-400 group-hover:text-ahava-blue text-sm mb-1"></i>
+                <i class="fa-solid fa-plus text-slate-400 group-hover:text-ahava-navy text-sm mb-1"></i>
                 <span class="text-[10px] font-bold text-slate-600 leading-tight line-clamp-2">${meta.title}</span>
                 <input type="file" accept="image/*" onchange="handleSinglePhotoUpload(event, ${idx})" class="hidden" />
               </label>
@@ -1638,14 +1386,14 @@
       if (activeTabEl) activeTabEl.classList.remove('hidden');
 
       document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('bg-ahava-navy', 'text-white', 'border-ahava-navy', 'shadow-xs', 'font-bold');
+        btn.classList.remove('bg-ahava-navy', 'text-white', 'border-ahava-navy', 'shadow-2xs', 'font-bold');
         btn.classList.add('bg-white', 'text-slate-600', 'border-slate-200', 'font-semibold');
       });
 
       const activeBtn = document.getElementById(`btn-${tabId}`);
       if (activeBtn) {
         activeBtn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200', 'font-semibold');
-        activeBtn.classList.add('bg-ahava-navy', 'text-white', 'border-ahava-navy', 'shadow-xs', 'font-bold');
+        activeBtn.classList.add('bg-ahava-navy', 'text-white', 'border-ahava-navy', 'shadow-2xs', 'font-bold');
       }
 
       if (targetPage && window.innerWidth >= 1024) {
@@ -1817,7 +1565,6 @@
         }
 
         const { jsPDF } = window.jspdf;
-        // Standard ISO A4 Portrait: 210mm x 297mm
         const pdf = new jsPDF({
           orientation: 'portrait',
           unit: 'mm',
@@ -1840,6 +1587,20 @@
 
           exportStage.innerHTML = '';
           exportStage.appendChild(cloneEl);
+
+          // Ensure all cloned inline SVGs have explicit pixel attributes for html2canvas
+          cloneEl.querySelectorAll('svg').forEach(svg => {
+            if (!svg.getAttribute('xmlns')) {
+              svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+            }
+            const rect = svg.getBoundingClientRect();
+            if (!svg.getAttribute('width') && rect.width > 0) {
+              svg.setAttribute('width', Math.round(rect.width));
+            }
+            if (!svg.getAttribute('height') && rect.height > 0) {
+              svg.setAttribute('height', Math.round(rect.height));
+            }
+          });
 
           await new Promise(r => requestAnimationFrame(() => setTimeout(r, 80)));
 
