@@ -146,52 +146,21 @@
         print-color-adjust: exact !important;
       }
 
-      /* Hide entire web interface chrome */
-      body > *:not(main),
-      .no-print,
-      header,
-      aside,
-      nav,
-      #editor-panel-aside,
-      #preview-toolbar,
-      #reset-modal,
-      #toast-notification {
+      /* Sembunyikan seluruh tampilan antarmuka web (desktop & mobile) */
+      body > *:not(#print-only-root) {
         display: none !important;
       }
 
-      main {
+      #print-only-root {
         display: block !important;
-        max-width: none !important;
         width: 210mm !important;
         min-width: 210mm !important;
         margin: 0 !important;
         padding: 0 !important;
+        background: #FFFFFF !important;
       }
 
-      #preview-panel-section,
-      #preview-scroll-container {
-        display: block !important;
-        width: 210mm !important;
-        min-width: 210mm !important;
-        height: auto !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: visible !important;
-      }
-
-      #pages-zoom-wrapper {
-        display: block !important;
-        transform: none !important;
-        zoom: 1 !important;
-        width: 210mm !important;
-        min-width: 210mm !important;
-        height: auto !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        gap: 0 !important;
-      }
-
-      .page-wrapper {
+      #print-only-root .print-a4-sheet {
         display: block !important;
         width: 210mm !important;
         min-width: 210mm !important;
@@ -205,17 +174,18 @@
         break-inside: avoid !important;
       }
 
-      .page-wrapper:last-child {
+      #print-only-root .print-a4-sheet:last-child {
         page-break-after: auto !important;
         break-after: auto !important;
       }
 
-      .pdf-page {
+      #print-only-root .pdf-page {
         width: 794px !important;
         min-width: 794px !important;
         height: 1123px !important;
         margin: 0 !important;
         transform: none !important;
+        zoom: 1 !important;
         box-shadow: none !important;
         border: none !important;
         -webkit-print-color-adjust: exact !important;
@@ -1533,37 +1503,48 @@
         : 'fa-solid fa-circle-check text-emerald-400 text-sm';
 
       toast.classList.remove('translate-y-28', 'opacity-0');
-      clearTimeout(toastTimer);
+      if (toastTimer) clearTimeout(toastTimer);
       toastTimer = setTimeout(() => {
         toast.classList.add('translate-y-28', 'opacity-0');
       }, 2800);
     }
 
-    // ==================== 100% EXACT A4 MANUAL PRINT ====================
+    // ==================== 100% EXACT A4 MANUAL PRINT (IDENTICAL DESKTOP & MOBILE) ====================
     function printExactPDF() {
       const donorClean = (appState.donorName || 'Donatur').trim();
       const monthClean = (appState.monthLabel || appState.activeMonthKey || '').trim();
       const origTitle = document.title;
-      const zoomWrapper = document.getElementById('pages-zoom-wrapper');
-      const previewSection = document.getElementById('preview-panel-section');
-      const editorAside = document.getElementById('editor-panel-aside');
       const viewportMeta = document.querySelector('meta[name="viewport"]');
       const origViewport = viewportMeta ? viewportMeta.getAttribute('content') : '';
 
+      // Pastikan seluruh isi pratinjau terbaru sudah ter-render
       renderPreview();
 
-      // Sembunyikan editor dan kunci hanya 6 halaman dokumen A4 saat proses cetak/simpan PDF
-      const wasHiddenOnMobile = previewSection && previewSection.classList.contains('hidden');
-      if (wasHiddenOnMobile) {
-        previewSection.classList.remove('hidden');
+      // Hapus wadah cetak lama jika masih ada
+      const oldPrintRoot = document.getElementById('print-only-root');
+      if (oldPrintRoot) oldPrintRoot.remove();
+
+      // Buat wadah khusus cetak di luar layout responsif web agar 100% sama di mobile & desktop
+      const printRoot = document.createElement('div');
+      printRoot.id = 'print-only-root';
+      printRoot.style.display = 'none';
+
+      for (let i = 1; i <= 6; i++) {
+        const sourcePage = document.getElementById(`pdf-page-${i}`);
+        if (!sourcePage) continue;
+
+        const sheet = document.createElement('div');
+        sheet.className = 'print-a4-sheet';
+
+        const clonedPage = sourcePage.cloneNode(true);
+        clonedPage.removeAttribute('id');
+        sheet.appendChild(clonedPage);
+        printRoot.appendChild(sheet);
       }
-      if (editorAside) {
-        editorAside.style.display = 'none';
-      }
-      if (zoomWrapper) {
-        zoomWrapper.style.transform = 'none';
-        zoomWrapper.style.marginBottom = '0px';
-      }
+
+      document.body.appendChild(printRoot);
+
+      // Kunci viewport ke lebar ISO A4 (794px) saat dialog cetak/simpan PDF mobile terbuka
       if (viewportMeta) {
         viewportMeta.setAttribute('content', 'width=794, initial-scale=1.0');
       }
@@ -1572,26 +1553,25 @@
         ? `Terima Kasih ${donorClean} (${monthClean})`
         : `Terima Kasih ${donorClean}`;
 
-      const restoreScreenLayout = () => {
+      let cleanedUp = false;
+      const cleanupPrintRoot = () => {
+        if (cleanedUp) return;
+        cleanedUp = true;
         document.title = origTitle;
         if (viewportMeta && origViewport) {
           viewportMeta.setAttribute('content', origViewport);
         }
-        if (editorAside) {
-          editorAside.style.display = '';
-        }
-        if (wasHiddenOnMobile && window.innerWidth < 1024 && mobileViewMode === 'editor') {
-          previewSection.classList.add('hidden');
-        }
-        applyZoom();
+        const rootEl = document.getElementById('print-only-root');
+        if (rootEl) rootEl.remove();
+        autoFitZoomForScreen();
       };
 
-      window.addEventListener('afterprint', restoreScreenLayout, { once: true });
+      window.addEventListener('afterprint', cleanupPrintRoot, { once: true });
 
       setTimeout(() => {
         window.print();
-        setTimeout(restoreScreenLayout, 1500);
-      }, 180);
+        setTimeout(cleanupPrintRoot, 2000);
+      }, 220);
     }
 
     // ==================== INITIALIZATION ====================
