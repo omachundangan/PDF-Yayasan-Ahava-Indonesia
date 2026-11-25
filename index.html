@@ -119,25 +119,17 @@
       height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #CBD5E1;
-      border-radius: 999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94A3B8;
-    }
-
-    /* Exact A4 Vector Print Styles */
+    /* Exact A4 Vector Print Styles (Locked for Both Desktop & Mobile) */
     @media print {
       @page {
-        size: A4 portrait;
+        size: 210mm 297mm;
         margin: 0 !important;
       }
 
       html, body {
-        width: 210mm !important;
+        width: 794px !important;
+        min-width: 794px !important;
+        max-width: 794px !important;
         margin: 0 !important;
         padding: 0 !important;
         background: #FFFFFF !important;
@@ -157,7 +149,8 @@
       main {
         display: block !important;
         max-width: none !important;
-        width: 210mm !important;
+        width: 794px !important;
+        min-width: 794px !important;
         margin: 0 !important;
         padding: 0 !important;
       }
@@ -165,7 +158,8 @@
       #preview-panel-section,
       #preview-scroll-container {
         display: block !important;
-        width: 210mm !important;
+        width: 794px !important;
+        min-width: 794px !important;
         height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
@@ -175,7 +169,9 @@
       #pages-zoom-wrapper {
         display: block !important;
         transform: none !important;
-        width: 210mm !important;
+        zoom: 1 !important;
+        width: 794px !important;
+        min-width: 794px !important;
         height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
@@ -184,10 +180,12 @@
 
       .page-wrapper {
         display: block !important;
-        width: 210mm !important;
-        height: 297mm !important;
+        width: 794px !important;
+        min-width: 794px !important;
+        height: 1123px !important;
         margin: 0 !important;
         padding: 0 !important;
+        overflow: hidden !important;
         page-break-after: always !important;
         break-after: page !important;
         page-break-inside: avoid !important;
@@ -201,8 +199,10 @@
 
       .pdf-page {
         width: 794px !important;
+        min-width: 794px !important;
         height: 1123px !important;
         margin: 0 !important;
+        transform: none !important;
         box-shadow: none !important;
         border: none !important;
         -webkit-print-color-adjust: exact !important;
@@ -1531,19 +1531,48 @@
       const donorClean = (appState.donorName || 'Donatur').trim();
       const monthClean = (appState.monthLabel || appState.activeMonthKey || '').trim();
       const origTitle = document.title;
+      const zoomWrapper = document.getElementById('pages-zoom-wrapper');
+      const previewSection = document.getElementById('preview-panel-section');
+      const viewportMeta = document.querySelector('meta[name="viewport"]');
+      const origViewport = viewportMeta ? viewportMeta.getAttribute('content') : '';
 
       renderPreview();
+
+      // Pastikan panel pratinjau aktif dan skala zoom direset ke 100% sebelum dialog print mobile terbuka
+      const wasHiddenOnMobile = previewSection && previewSection.classList.contains('hidden');
+      if (wasHiddenOnMobile) {
+        previewSection.classList.remove('hidden');
+      }
+      if (zoomWrapper) {
+        zoomWrapper.style.transform = 'none';
+        zoomWrapper.style.marginBottom = '0px';
+      }
+      if (viewportMeta) {
+        viewportMeta.setAttribute('content', 'width=794, initial-scale=1.0');
+      }
 
       document.title = monthClean
         ? `Terima Kasih ${donorClean} (${monthClean})`
         : `Terima Kasih ${donorClean}`;
 
+      const restoreScreenLayout = () => {
+        document.title = origTitle;
+        if (viewportMeta && origViewport) {
+          viewportMeta.setAttribute('content', origViewport);
+        }
+        if (wasHiddenOnMobile && window.innerWidth < 1024 && mobileViewMode === 'editor') {
+          previewSection.classList.add('hidden');
+        }
+        applyZoom();
+      };
+
+      window.addEventListener('afterprint', restoreScreenLayout, { once: true });
+
       setTimeout(() => {
         window.print();
-        setTimeout(() => {
-          document.title = origTitle;
-        }, 1000);
-      }, 150);
+        // Cadangan pemulihan untuk browser mobile yang tidak memicu event afterprint
+        setTimeout(restoreScreenLayout, 1200);
+      }, 180);
     }
 
     // ==================== INITIALIZATION ====================
