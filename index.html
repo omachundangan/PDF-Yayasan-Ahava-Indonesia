@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Generator PDF Ucapan Terima Kasih - Yayasan Ahava Indonesia</title>
 
+  <!-- Favicon Logo Yayasan Ahava Indonesia -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 560'%3E%3Cpath d='M256 105C220 55 155 30 95 55C30 82 5 155 25 230C48 315 135 395 256 470C377 395 464 315 487 230C507 155 482 82 417 55C357 30 292 55 256 105Z' fill='none' stroke='%231D8FE1' stroke-width='38' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='256' cy='196' r='44' fill='%23F7B519'/%3E%3Cpath d='M352 80C382 135 362 215 274 286L318 332C408 255 422 145 352 80Z' fill='%236B1DC6'/%3E%3Cpath d='M193 386L56 560L172 515L255 432L193 386Z' fill='%236B1DC6'/%3E%3Cpath d='M154 80C84 145 98 255 188 332L354 522L452 560L382 412C280 285 112 205 154 80Z' fill='%23EA6B97'/%3E%3C/svg%3E" />
+
   <!-- Google Fonts: Playfair Display (Editorial Serif), Plus Jakarta Sans & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,10 +18,6 @@
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- PDF Generation Libraries (html2canvas + jsPDF) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
     tailwind.config = {
@@ -76,6 +75,9 @@
       }
       body[data-mobile-view="preview"] #editor-panel-aside {
         display: none !important;
+      }
+      #pages-zoom-wrapper {
+        gap: 20px !important;
       }
     }
 
@@ -174,14 +176,14 @@
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col pb-12 lg:pb-0" data-mobile-view="editor">
+<body class="min-h-screen flex flex-col pb-20 lg:pb-0" data-mobile-view="editor">
 
   <!-- ==================== TOP NAVIGATION BAR ==================== -->
   <header class="no-print sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 px-3 sm:px-6 py-2.5 sm:py-3 shadow-2xs">
     <div class="max-w-[1600px] mx-auto flex items-center justify-between gap-2">
       <!-- Brand Identity -->
-      <div class="flex items-center gap-2.5 min-w-0">
-        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-50 border border-amber-200/80 flex items-center justify-center p-1.5 shadow-2xs shrink-0">
+      <div class="flex items-center gap-2 sm:gap-2.5 min-w-0">
+        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-50 border border-amber-200/80 flex items-center justify-center p-1.5 shadow-2xs shrink-0">
           <svg viewBox="0 0 512 560" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M256 105C220 55 155 30 95 55C30 82 5 155 25 230C48 315 135 395 256 470C377 395 464 315 487 230C507 155 482 82 417 55C357 30 292 55 256 105Z" stroke="#1D8FE1" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
             <circle cx="256" cy="196" r="42" fill="#F7B519"/>
@@ -192,56 +194,39 @@
         </div>
         <div class="min-w-0">
           <div class="flex items-center gap-2">
-            <h1 class="text-sm sm:text-lg font-extrabold text-ahava-navy tracking-tight leading-tight truncate">
+            <h1 class="text-[13px] sm:text-lg font-extrabold text-ahava-navy tracking-tight leading-tight truncate">
               Yayasan Ahava Indonesia
             </h1>
             <span class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200 shrink-0">
               Edisi Editorial A4
             </span>
           </div>
-          <p class="text-[11px] sm:text-xs text-slate-500 truncate">Ucapan Terima Kasih & Sertifikat Donasi • 12 Foto 9:16</p>
+          <p class="text-[10px] sm:text-xs text-slate-500 truncate">Ucapan Terima Kasih & Sertifikat Donasi</p>
         </div>
       </div>
 
       <!-- Action Buttons -->
       <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-        <button onclick="openResetModal()" type="button" class="p-2 sm:px-3 sm:py-2 rounded-xl text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition flex items-center gap-1.5 cursor-pointer" title="Kembalikan data ke contoh awal">
+        <button onclick="openResetModal()" type="button" class="w-9 h-9 sm:w-auto sm:h-auto sm:px-3 sm:py-2 rounded-xl text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition flex items-center justify-center gap-1.5 cursor-pointer" title="Kembalikan data ke contoh awal">
           <i class="fa-solid fa-rotate-left"></i>
           <span class="hidden md:inline">Reset</span>
         </button>
 
-        <button onclick="saveDraftToStorage(true)" type="button" class="p-2 sm:px-3 sm:py-2 rounded-xl text-xs font-semibold text-ahava-navy bg-blue-50 hover:bg-blue-100 border border-blue-200 transition flex items-center gap-1.5 cursor-pointer" title="Simpan perubahan sementara di browser">
+        <button onclick="saveDraftToStorage(true)" type="button" class="w-9 h-9 sm:w-auto sm:h-auto sm:px-3 sm:py-2 rounded-xl text-xs font-semibold text-ahava-navy bg-blue-50 hover:bg-blue-100 border border-blue-200 transition flex items-center justify-center gap-1.5 cursor-pointer" title="Simpan perubahan sementara di browser">
           <i class="fa-solid fa-floppy-disk"></i>
           <span class="hidden sm:inline">Simpan</span>
         </button>
 
-        <button onclick="printExactPDF()" type="button" class="hidden sm:flex px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-ahava-navy bg-amber-300 hover:bg-amber-400 border border-amber-400 shadow-2xs transition items-center gap-1.5 cursor-pointer" title="Cetak atau Simpan sebagai PDF Vektor 100% Presisi">
-          <i class="fa-solid fa-print"></i>
-          <span class="hidden md:inline">Cetak Vektor</span>
-        </button>
-
-        <button id="btn-download-pdf" onclick="generatePDF()" type="button" class="px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-ahava-navy to-[#154296] hover:from-[#081d46] hover:to-ahava-navy shadow-md hover:shadow-lg transition flex items-center gap-1.5 cursor-pointer">
-          <i class="fa-solid fa-file-pdf text-amber-300"></i>
-          <span>Unduh PDF</span>
+        <button onclick="printExactPDF()" type="button" class="px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-ahava-navy to-[#154296] hover:from-[#081d46] hover:to-ahava-navy shadow-md hover:shadow-lg transition flex items-center gap-1.5 cursor-pointer" title="Cetak atau Simpan sebagai PDF Vektor 100% Presisi">
+          <i class="fa-solid fa-print text-amber-300"></i>
+          <span>Cetak Vektor</span>
         </button>
       </div>
-    </div>
-
-    <!-- Mobile Quick View Switcher -->
-    <div class="lg:hidden mt-2.5 pt-2 border-t border-slate-100 grid grid-cols-2 gap-2">
-      <button type="button" onclick="setMobileView('editor')" id="mob-nav-editor" class="py-2 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 bg-ahava-navy text-white shadow-2xs transition cursor-pointer">
-        <i class="fa-solid fa-sliders"></i>
-        <span>1. Isi Data & Foto</span>
-      </button>
-      <button type="button" onclick="setMobileView('preview')" id="mob-nav-preview" class="py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 transition cursor-pointer">
-        <i class="fa-solid fa-eye"></i>
-        <span>2. Lihat PDF A4</span>
-      </button>
     </div>
   </header>
 
   <!-- ==================== MAIN WORKSPACE ==================== -->
-  <main class="flex-1 max-w-[1600px] w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-6 p-3 sm:p-5">
+  <main class="flex-1 max-w-[1600px] w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-6 p-2.5 sm:p-5">
 
     <!-- ==================== LEFT PANEL: COMPACT CONTROLS (5 COLS) ==================== -->
     <aside id="editor-panel-aside" class="no-print lg:col-span-5 xl:col-span-4 flex flex-col bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden lg:h-[calc(100vh-92px)] lg:sticky lg:top-[76px]">
@@ -321,7 +306,7 @@
           <div class="space-y-2">
             <!-- Accordion 1: Halaman 1 -->
             <details class="group rounded-xl border border-slate-200 bg-white overflow-hidden">
-              <summary class="px-3.5 py-2.5 bg-slate-50 hover:bg-slate-100 text-xs font-bold text-ahava-navy flex items-center justify-between cursor-pointer select-none">
+              <summary class="px-3.5 py-3 bg-slate-50 hover:bg-slate-100 text-xs font-bold text-ahava-navy flex items-center justify-between cursor-pointer select-none">
                 <span><i class="fa-solid fa-envelope-open-text text-ahava-blue mr-1.5"></i> Teks Kata Sambutan (Halaman 1)</span>
                 <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 group-open:rotate-180 transition-transform"></i>
               </summary>
@@ -357,7 +342,7 @@
 
             <!-- Accordion 2: Halaman 2 & Halaman 6 -->
             <details class="group rounded-xl border border-slate-200 bg-white overflow-hidden">
-              <summary class="px-3.5 py-2.5 bg-slate-50 hover:bg-slate-100 text-xs font-bold text-ahava-navy flex items-center justify-between cursor-pointer select-none">
+              <summary class="px-3.5 py-3 bg-slate-50 hover:bg-slate-100 text-xs font-bold text-ahava-navy flex items-center justify-between cursor-pointer select-none">
                 <span><i class="fa-solid fa-heart text-ahava-gold mr-1.5"></i> Teks Tanda Terima & Penutup (Hal 2 & 6)</span>
                 <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 group-open:rotate-180 transition-transform"></i>
               </summary>
@@ -450,23 +435,14 @@
         </div>
 
       </div>
-
-      <!-- Mobile Quick Next Step CTA inside Editor -->
-      <div class="lg:hidden p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-2">
-        <span class="text-[11px] font-semibold text-slate-500">Selesai mengisi data & foto?</span>
-        <button type="button" onclick="setMobileView('preview')" class="px-4 py-2 rounded-xl bg-ahava-navy text-white text-xs font-bold shadow-2xs flex items-center gap-1.5 cursor-pointer">
-          <span>Lihat Pratinjau A4</span>
-          <i class="fa-solid fa-arrow-right text-amber-300"></i>
-        </button>
-      </div>
     </aside>
 
     <!-- ==================== RIGHT PANEL: LIVE A4 PDF PREVIEW (7 COLS) ==================== -->
     <section id="preview-panel-section" class="lg:col-span-7 xl:col-span-8 flex flex-col">
 
       <!-- Preview Toolbar -->
-      <div class="no-print bg-white rounded-2xl border border-slate-200 px-3 sm:px-4 py-2.5 mb-3 sm:mb-4 flex flex-wrap items-center justify-between gap-2 shadow-2xs">
-        <div class="flex items-center gap-2">
+      <div class="no-print bg-white rounded-2xl border border-slate-200 px-3 sm:px-4 py-2 sm:py-2.5 mb-3 sm:mb-4 flex flex-wrap items-center justify-between gap-2 shadow-2xs">
+        <div class="hidden sm:flex items-center gap-2">
           <span class="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
           <span class="text-xs font-bold text-slate-700">Pratinjau Edisi Editorial A4 (210 × 297 mm)</span>
         </div>
@@ -474,20 +450,20 @@
         <!-- Quick Page Jump & Zoom Controls -->
         <div class="flex items-center gap-1.5 sm:gap-2 w-full sm:w-auto justify-between sm:justify-end">
           <div class="flex items-center gap-0.5 sm:gap-1 bg-slate-100 p-1 rounded-xl overflow-x-auto">
-            <button type="button" onclick="scrollToPage(1)" class="px-2 py-1 rounded-lg text-[11px] font-bold text-slate-600 hover:bg-white hover:text-ahava-navy transition cursor-pointer">H1</button>
-            <button type="button" onclick="scrollToPage(2)" class="px-2 py-1 rounded-lg text-[11px] font-bold text-slate-600 hover:bg-white hover:text-ahava-navy transition cursor-pointer">H2</button>
-            <button type="button" onclick="scrollToPage(3)" class="px-2 py-1 rounded-lg text-[11px] font-bold text-slate-600 hover:bg-white hover:text-ahava-navy transition cursor-pointer">H3</button>
-            <button type="button" onclick="scrollToPage(4)" class="px-2 py-1 rounded-lg text-[11px] font-bold text-slate-600 hover:bg-white hover:text-ahava-navy transition cursor-pointer">H4</button>
-            <button type="button" onclick="scrollToPage(5)" class="px-2 py-1 rounded-lg text-[11px] font-bold text-slate-600 hover:bg-white hover:text-ahava-navy transition cursor-pointer">H5</button>
-            <button type="button" onclick="scrollToPage(6)" class="px-2 py-1 rounded-lg text-[11px] font-bold text-slate-600 hover:bg-white hover:text-ahava-navy transition cursor-pointer">H6</button>
+            <button type="button" onclick="scrollToPage(1)" class="px-2.5 py-1.5 sm:px-2 sm:py-1 rounded-lg text-[11px] font-bold text-slate-600 hover:bg-white hover:text-ahava-navy transition cursor-pointer">H1</button>
+            <button type="button" onclick="scrollToPage(2)" class="px-2.5 py-1.5 sm:px-2 sm:py-1 rounded-lg text-[11px] font-bold text-slate-600 hover:bg-white hover:text-ahava-navy transition cursor-pointer">H2</button>
+            <button type="button" onclick="scrollToPage(3)" class="px-2.5 py-1.5 sm:px-2 sm:py-1 rounded-lg text-[11px] font-bold text-slate-600 hover:bg-white hover:text-ahava-navy transition cursor-pointer">H3</button>
+            <button type="button" onclick="scrollToPage(4)" class="px-2.5 py-1.5 sm:px-2 sm:py-1 rounded-lg text-[11px] font-bold text-slate-600 hover:bg-white hover:text-ahava-navy transition cursor-pointer">H4</button>
+            <button type="button" onclick="scrollToPage(5)" class="px-2.5 py-1.5 sm:px-2 sm:py-1 rounded-lg text-[11px] font-bold text-slate-600 hover:bg-white hover:text-ahava-navy transition cursor-pointer">H5</button>
+            <button type="button" onclick="scrollToPage(6)" class="px-2.5 py-1.5 sm:px-2 sm:py-1 rounded-lg text-[11px] font-bold text-slate-600 hover:bg-white hover:text-ahava-navy transition cursor-pointer">H6</button>
           </div>
 
           <div class="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-xl shrink-0">
-            <button type="button" onclick="adjustZoom(-0.08)" class="w-6 h-6 rounded-lg hover:bg-white text-slate-600 text-xs flex items-center justify-center cursor-pointer" title="Perkecil">
+            <button type="button" onclick="adjustZoom(-0.08)" class="w-7 h-7 sm:w-6 sm:h-6 rounded-lg hover:bg-white text-slate-600 text-xs flex items-center justify-center cursor-pointer" title="Perkecil">
               <i class="fa-solid fa-minus"></i>
             </button>
             <span id="zoom-label" class="text-[11px] font-bold text-slate-700 w-9 text-center">72%</span>
-            <button type="button" onclick="adjustZoom(0.08)" class="w-6 h-6 rounded-lg hover:bg-white text-slate-600 text-xs flex items-center justify-center cursor-pointer" title="Perbesar">
+            <button type="button" onclick="adjustZoom(0.08)" class="w-7 h-7 sm:w-6 sm:h-6 rounded-lg hover:bg-white text-slate-600 text-xs flex items-center justify-center cursor-pointer" title="Perbesar">
               <i class="fa-solid fa-plus"></i>
             </button>
           </div>
@@ -495,7 +471,7 @@
       </div>
 
       <!-- Pages Viewport Container -->
-      <div id="preview-scroll-container" class="flex-1 overflow-x-hidden pb-12 flex flex-col items-center">
+      <div id="preview-scroll-container" class="flex-1 overflow-x-hidden pb-8 lg:pb-12 flex flex-col items-center">
         <div id="pages-zoom-wrapper" class="flex flex-col items-center gap-8 transition-transform duration-200 origin-top">
 
           <!-- ===================================================================== -->
@@ -943,6 +919,20 @@
     </section>
   </main>
 
+  <!-- ==================== MOBILE FIXED BOTTOM NAVIGATION BAR ==================== -->
+  <nav class="no-print lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 shadow-[0_-6px_20px_-6px_rgba(15,23,42,0.12)]">
+    <div class="grid grid-cols-2 gap-2 max-w-md mx-auto">
+      <button type="button" onclick="setMobileView('editor')" id="mob-nav-editor" class="py-2.5 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 bg-ahava-navy text-white shadow-2xs transition cursor-pointer">
+        <i class="fa-solid fa-sliders"></i>
+        <span>1. Edit Data & Foto</span>
+      </button>
+      <button type="button" onclick="setMobileView('preview')" id="mob-nav-preview" class="py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 transition cursor-pointer">
+        <i class="fa-solid fa-eye"></i>
+        <span>2. Lihat PDF A4</span>
+      </button>
+    </div>
+  </nav>
+
   <!-- ==================== RESET CONFIRMATION MODAL ==================== -->
   <div id="reset-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4">
     <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-100">
@@ -964,22 +954,8 @@
     </div>
   </div>
 
-  <!-- ==================== EXPORT PROGRESS OVERLAY ==================== -->
-  <div id="export-overlay" class="fixed inset-0 z-50 hidden items-center justify-center bg-ahava-navy/80 backdrop-blur-sm p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-7 text-center shadow-2xl">
-      <div class="w-16 h-16 rounded-2xl bg-blue-50 text-ahava-blue flex items-center justify-center text-3xl mx-auto mb-4">
-        <i class="fa-solid fa-spinner fa-spin"></i>
-      </div>
-      <h3 class="text-base font-extrabold text-ahava-navy mb-1">Membuat Dokumen PDF A4...</h3>
-      <p id="export-status-text" class="text-xs text-slate-500 mb-4">Menyiapkan Halaman 1 dari 6...</p>
-      <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-        <div id="export-progress-bar" class="h-full bg-gradient-to-r from-ahava-blue to-ahava-cyan rounded-full transition-all duration-300" style="width: 15%"></div>
-      </div>
-    </div>
-  </div>
-
   <!-- ==================== TOAST NOTIFICATION ==================== -->
-  <div id="toast-notification" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+  <div id="toast-notification" class="fixed bottom-16 lg:bottom-5 left-4 right-4 sm:left-auto sm:right-5 z-50 transform translate-y-28 opacity-0 transition-all duration-300 pointer-events-none">
     <div class="bg-ahava-navy text-white px-4 py-3 rounded-xl shadow-xl flex items-center justify-center sm:justify-start gap-2.5 text-xs font-semibold border border-blue-800">
       <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
       <span id="toast-message">Berhasil disimpan!</span>
@@ -1369,11 +1345,11 @@
       const btnPreview = document.getElementById('mob-nav-preview');
       if (btnEditor && btnPreview) {
         if (view === 'editor') {
-          btnEditor.className = 'py-2 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 bg-ahava-navy text-white shadow-2xs transition cursor-pointer';
-          btnPreview.className = 'py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 transition cursor-pointer';
+          btnEditor.className = 'py-2.5 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 bg-ahava-navy text-white shadow-2xs transition cursor-pointer';
+          btnPreview.className = 'py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 transition cursor-pointer';
         } else {
-          btnPreview.className = 'py-2 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 bg-ahava-navy text-white shadow-2xs transition cursor-pointer';
-          btnEditor.className = 'py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 transition cursor-pointer';
+          btnPreview.className = 'py-2.5 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 bg-ahava-navy text-white shadow-2xs transition cursor-pointer';
+          btnEditor.className = 'py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 transition cursor-pointer';
           requestAnimationFrame(() => autoFitZoomForScreen());
         }
       }
@@ -1442,11 +1418,11 @@
     function autoFitZoomForScreen() {
       const container = document.getElementById('preview-scroll-container');
       const availableWidth = (container && container.clientWidth > 0)
-        ? container.clientWidth - 12
-        : window.innerWidth - 32;
+        ? container.clientWidth - 8
+        : window.innerWidth - 20;
 
       if (availableWidth < A4_WIDTH_PX) {
-        currentZoom = Math.max(0.36, +(availableWidth / A4_WIDTH_PX).toFixed(2));
+        currentZoom = Math.max(0.35, +(availableWidth / A4_WIDTH_PX).toFixed(2));
       } else if (window.innerWidth < 1440) {
         currentZoom = 0.65;
       } else {
@@ -1512,10 +1488,10 @@
         iconEl.className = 'fa-solid fa-circle-check text-emerald-400 text-sm';
       }
 
-      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.remove('translate-y-28', 'opacity-0');
       clearTimeout(toastTimeout);
       toastTimeout = setTimeout(() => {
-        toast.classList.add('translate-y-24', 'opacity-0');
+        toast.classList.add('translate-y-28', 'opacity-0');
       }, 3000);
     }
 
@@ -1531,121 +1507,6 @@
       setTimeout(() => {
         document.title = origTitle;
       }, 1000);
-    }
-
-    async function generatePDF() {
-      if (!window.jspdf || !window.html2canvas) {
-        showToast('Library PDF sedang dimuat, coba sesaat lagi.', 'error');
-        return;
-      }
-
-      const overlay = document.getElementById('export-overlay');
-      const statusText = document.getElementById('export-status-text');
-      const progressBar = document.getElementById('export-progress-bar');
-
-      overlay.classList.remove('hidden');
-      overlay.classList.add('flex');
-
-      // Isolated 1:1 unscaled A4 staging container at (0,0) so viewport scroll/zoom never shifts elements
-      const exportStage = document.createElement('div');
-      exportStage.style.position = 'fixed';
-      exportStage.style.top = '0';
-      exportStage.style.left = '0';
-      exportStage.style.width = `${A4_WIDTH_PX}px`;
-      exportStage.style.height = `${A4_HEIGHT_PX}px`;
-      exportStage.style.zIndex = '-9999';
-      exportStage.style.pointerEvents = 'none';
-      exportStage.style.backgroundColor = '#ffffff';
-      exportStage.style.overflow = 'hidden';
-      document.body.appendChild(exportStage);
-
-      try {
-        if (document.fonts && document.fonts.ready) {
-          await document.fonts.ready;
-        }
-
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF({
-          orientation: 'portrait',
-          unit: 'mm',
-          format: 'a4',
-          compress: true
-        });
-
-        const totalPages = 6;
-        for (let i = 1; i <= totalPages; i++) {
-          statusText.textContent = `Merender Halaman A4 ${i} dari ${totalPages}...`;
-          progressBar.style.width = `${Math.round((i / totalPages) * 90)}%`;
-
-          const sourceEl = document.getElementById(`pdf-page-${i}`);
-          const cloneEl = sourceEl.cloneNode(true);
-          cloneEl.style.transform = 'none';
-          cloneEl.style.margin = '0';
-          cloneEl.style.boxShadow = 'none';
-          cloneEl.style.width = `${A4_WIDTH_PX}px`;
-          cloneEl.style.height = `${A4_HEIGHT_PX}px`;
-
-          exportStage.innerHTML = '';
-          exportStage.appendChild(cloneEl);
-
-          // Ensure all cloned inline SVGs have explicit pixel attributes for html2canvas
-          cloneEl.querySelectorAll('svg').forEach(svg => {
-            if (!svg.getAttribute('xmlns')) {
-              svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-            }
-            const rect = svg.getBoundingClientRect();
-            if (!svg.getAttribute('width') && rect.width > 0) {
-              svg.setAttribute('width', Math.round(rect.width));
-            }
-            if (!svg.getAttribute('height') && rect.height > 0) {
-              svg.setAttribute('height', Math.round(rect.height));
-            }
-          });
-
-          await new Promise(r => requestAnimationFrame(() => setTimeout(r, 80)));
-
-          const canvas = await html2canvas(cloneEl, {
-            scale: 2.5,
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: '#ffffff',
-            width: A4_WIDTH_PX,
-            height: A4_HEIGHT_PX,
-            x: 0,
-            y: 0,
-            scrollX: 0,
-            scrollY: 0,
-            logging: false
-          });
-
-          const imgData = canvas.toDataURL('image/jpeg', 0.96);
-          if (i > 1) {
-            pdf.addPage('a4', 'portrait');
-          }
-          pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
-        }
-
-        statusText.textContent = 'Menyimpan file PDF A4...';
-        progressBar.style.width = '100%';
-
-        const donorClean = (appState.donorName || 'Donatur').replace(/[\\/:*?"<>|]/g, '').trim();
-        const monthClean = (appState.monthLabel || appState.activeMonthKey || '').replace(/[\\/:*?"<>|]/g, '').trim();
-        const fileName = monthClean
-          ? `Terima Kasih ${donorClean} (${monthClean}).pdf`
-          : `Terima Kasih ${donorClean}.pdf`;
-
-        pdf.save(fileName);
-        showToast(`PDF A4 "${fileName}" berhasil diunduh!`);
-      } catch (err) {
-        console.error('PDF generation failed:', err);
-        showToast('Terjadi kesalahan saat membuat PDF.', 'error');
-      } finally {
-        exportStage.remove();
-        setTimeout(() => {
-          overlay.classList.add('hidden');
-          overlay.classList.remove('flex');
-        }, 400);
-      }
     }
 
     // ==================== INITIALIZATION ====================
